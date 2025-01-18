@@ -1,0 +1,17 @@
+{
+	"name": "stranger",
+	"type": "module",
+	"scripts": {
+		"build": "vite build",
+		"dev": "vite",
+		"preview": "vite preview",
+		"zip": "npm run build && mkdir -p dist && zip -r dist/game.zip dist -x \"**/.DS_Store\""
+	},
+	"dependencies": {
+		"kaplay": "^3001.0.6"
+	},
+	"devDependencies": {
+		"@types/node": "^22.10.5",
+		"vite": "^6.0.7"
+	}
+}
