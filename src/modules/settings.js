@@ -1,4 +1,4 @@
-import { Colors } from '/src/colors.js';
+import { Colors } from '/src/modules/colors.js';
 
 export const Settings = (function implementer(colors) {
     const scene = {

@@ -1,24 +1,22 @@
 'use strict';
 import kaplay from 'kaplay';
-import { Settings } from '/src/settings.js';
+import { Settings } from '/src/modules/settings.js';
+import { Loader } from '/src/modules/loader.js';
 import { layers as layerDataStageZero } from '/src/data/stageZero.json' assert { type: 'JSON' };
 
-(function main(settings) {
+(function main(settings, loader) {
     const k = kaplay({
         width: settings.scene.width,
         height: settings.scene.height,
         background: settings.colors.getColor('swatch20'),
         scale: 1,
-        debugKey: 'd',
+        debugKey: 'd', // DELETE
     });
     k.loadRoot('./');
+    k.debug.inspect = true; // DELETE
+    loader.load(k);
 
-    // TODO: Continue. Refactoring
-    k.debug.inspect = true;
-
-    k.loadSprite('player', 'sprites/player.png');
-    k.loadSprite('stageZero', 'sprites/stageZero.png');
-
+    
     const stage = k.add([k.sprite('stageZero'), k.pos(0, 0)]);
     console.log(layerDataStageZero);
 
@@ -59,4 +57,4 @@ import { layers as layerDataStageZero } from '/src/data/stageZero.json' assert {
     //k.add([k.pos(10, 80), k.sprite('bean')]);
 
     k.onClick(() => k.addKaboom(k.mousePos()));
-})(Settings);
+})(Settings, Loader);
