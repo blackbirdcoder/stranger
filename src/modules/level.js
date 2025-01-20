@@ -1,5 +1,5 @@
 export const Level = (function implementer() {
-    function buildLocation(k, levelSpriteName, layersLevel) {
+    function buildLocation(k, levelSpriteName, layersLevel, player) {
         // TODO: Implement levels
         const stage = k.add([k.sprite(levelSpriteName), k.pos(0, 0)]);
         console.log(layersLevel);
@@ -17,14 +17,8 @@ export const Level = (function implementer() {
             if (layer.name === 'Positions') {
                 for (const object of layer.objects) {
                     if (object.name === 'player') {
-                        stage.add([
-                            k.sprite('player'),
-                            k.area(),
-                            k.body(),
-                            k.pos(object.x, object.y),
-                            k.anchor('topleft'),
-                            'player',
-                        ]);
+                        player.setPosition(object.x, object.y);
+                        stage.add(player.get());
                     }
                     continue;
                 }

@@ -6,8 +6,14 @@ export const Settings = (function implementer(colors) {
         height: 600,
     };
 
+    const hero = {
+        speed: 300,
+        jump: 200,
+    };
+
     return Object.freeze({
         scene: scene,
         colors: colors,
+        hero: hero,
     });
 })(Colors);
