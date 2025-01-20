@@ -3,7 +3,7 @@
  * It creates a color palette and facilitates easy retrieval and display of colors.
  */
 export const Colors = (function implementer() {
-    const palette = buildColorPalette([
+    const palette = buildCPalette([
         '#6b9a71',
         '#457a5f',
         '#244f55',
@@ -33,7 +33,7 @@ export const Colors = (function implementer() {
      * @param {string[]} colorSequence - Array with color values ​​in hex format.
      * @returns {Object} - An palette object where each color is assigned a name for easy reference.
      */
-    function buildColorPalette(colorSequence) {
+    function buildCPalette(colorSequence) {
         const colors = {};
         for (let i = 0; i < colorSequence.length; i++) {
             colors[`swatch${i}`] = colorSequence[i];
@@ -45,7 +45,7 @@ export const Colors = (function implementer() {
      * Outputs colors and their names to the console.
      * Each swatch is displayed with its corresponding background color.
      */
-    function palettePreview() {
+    function preview() {
         for (const swatch in palette) {
             console.log('%c%s', `background:${palette[swatch]}; padding: 5px;`, `${swatch}`);
         }
@@ -57,9 +57,9 @@ export const Colors = (function implementer() {
      * @param {string} swatch - Name of the color we want to get from the palette.
      * @returns {string} - Hex color value.
      */
-    function getColor(swatch) {
+    function get(swatch) {
         const color = palette[swatch];
-        if (color === undefined) {
+        if (!color) {
             console.warn(`There is no such color ${swatch} in the palette`);
             return '#ffffff';
         }
@@ -67,7 +67,7 @@ export const Colors = (function implementer() {
     }
 
     return Object.freeze({
-        helpPalettePreview: palettePreview,
-        getColor: getColor,
+        preview: preview,
+        get: get,
     });
 })();

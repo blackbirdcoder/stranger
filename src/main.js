@@ -3,58 +3,48 @@ import kaplay from 'kaplay';
 import { Settings } from '/src/modules/settings.js';
 import { Loader } from '/src/modules/loader.js';
 import { layers as layerDataStageZero } from '/src/data/stageZero.json' assert { type: 'JSON' };
+import { Level } from '/src/modules/level.js';
 
-(function main(settings, loader) {
+(function main(settings, loader, level) {
     const k = kaplay({
         width: settings.scene.width,
         height: settings.scene.height,
-        background: settings.colors.getColor('swatch20'),
+        background: settings.colors.get('swatch20'),
         scale: 1,
         debugKey: 'd', // DELETE
     });
     k.loadRoot('./');
     k.debug.inspect = true; // DELETE
     loader.load(k);
+    k.setGravity(1000);
 
-    
-    const stage = k.add([k.sprite('stageZero'), k.pos(0, 0)]);
-    console.log(layerDataStageZero);
+    // TODO: Make a distinction by scenes
+    const stage = level.buildLocation(k, 'stageZero', layerDataStageZero);
 
-    for (const layer of layerDataStageZero) {
-        if (layer.name === 'Colliders') {
-            for (const object of layer.objects) {
-                //console.log(object.x, object.y);
-                stage.add([
-                    k.area({ shape: new Rect(k.vec2(0), object.width, object.height) }),
-                    k.body({ isStatic: true }),
-                    k.pos(object.x, object.y),
-                ]);
-            }
-            continue;
-        }
-        if (layer.name === 'Positions') {
-            for (const object of layer.objects) {
-                if (object.name === 'player') {
-                    console.log('work created player');
-                    stage.add([k.sprite('player'), k.area(), k.pos(object.x, object.y), k.anchor('topleft'), 'player']);
-                }
-                continue;
-            }
-        }
-    }
-
+    // TODO: Implement the player module
     const player = stage.get('player')[0];
-    const { x, y } = player.worldPos();
-    console.log(x, y);
-    k.setCamPos(x + 10, y - 90);
-    k.setCamScale(2, 2);
-    /*
-    k.onUpdate(() => {
-        k.debug.log(k.debug.fps());
+    player.onKeyDown('right', () => {
+        player.move(100, 0);
     });
-    */
 
-    //k.add([k.pos(10, 80), k.sprite('bean')]);
+    player.onKeyDown('left', () => {
+        player.move(-100, 0);
+    });
 
-    k.onClick(() => k.addKaboom(k.mousePos()));
-})(Settings, Loader);
+    player.onKeyDown('up', () => {
+        if (player.isGrounded()) {
+            player.jump(700);
+        }
+    });
+
+    // -------------  Cam
+    k.onUpdate(() => {
+        const { x, y } = player.worldPos();
+        //console.log(x, y);
+
+        k.setCamPos(x + 10, y - 90);
+        k.setCamScale(2, 2);
+
+        // k.debug.log(k.debug.fps());
+    });
+})(Settings, Loader, Level);
