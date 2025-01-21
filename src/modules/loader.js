@@ -34,18 +34,22 @@ export const Loader = (function implementer() {
                         walk: {
                             from: 0,
                             to: 5,
+                            loop: true,
                         },
                         jump: {
                             from: 6,
                             to: 11,
+                            speed: 6,
                         },
                         attack: {
                             from: 12,
                             to: 17,
+                            speed: 30,
                         },
                         idle: {
-                            from: 13,
-                            to: 18,
+                            from: 18,
+                            to: 23,
+                            loop: true,
                         },
                     },
                 });

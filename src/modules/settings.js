@@ -8,7 +8,7 @@ export const Settings = (function implementer(colors) {
 
     const hero = {
         speed: 300,
-        jump: 200,
+        jump: 400,
     };
 
     return Object.freeze({

@@ -25,20 +25,51 @@ export const Player = (function implementer() {
         return _checkExistence() ? player : null;
     }
 
-    function launchMovement() {
+    function launchMovement(k) {
         if (_checkExistence()) {
-            player.onKeyDown('right', () => {
-                player.move(parameters.speed, 0);
-            });
+            player.play('idle');
 
-            player.onKeyDown('left', () => {
-                player.move(-parameters.speed, 0);
-            });
-
-            player.onKeyDown('up', () => {
-                if (player.isGrounded()) {
-                    player.jump(parameters.jump);
+            player.onKeyDown(['right', 'left', 'up'], (key) => {
+                if (key === 'right') {
+                    if (player.curAnim() !== 'attack') player.move(parameters.speed, 0);
+                } else if (key === 'left') {
+                    if (player.curAnim() !== 'attack') player.move(-parameters.speed, 0);
+                } else if (key === 'up') {
+                    if (player.isGrounded()) player.jump(parameters.jump);
                 }
+            });
+
+            player.onKeyPress(['up', 'right', 'left'], (key) => {
+                if (key === 'up') player.play('jump');
+                if (key === 'right') player.play('walk');
+                if (key === 'left') player.play('walk');
+            });
+
+            player.onKeyRelease(['space', 'up', 'right', 'left'], (key) => {
+                if (key === 'space') {
+                    player.play('attack');
+                } else {
+                    if (player.curAnim() !== 'idle') player.play('idle');
+                }
+            });
+
+            player.onUpdate(() => {
+                if (player.curAnim() === undefined) player.play('idle');
+
+                if (
+                    (!k.isKeyDown('space') && k.isKeyDown('right') && player.curAnim() === 'idle') ||
+                    (!k.isKeyDown('space') && k.isKeyDown('left') && player.curAnim() === 'idle')
+                ) {
+                    player.play('walk');
+                }
+
+                if (k.isKeyDown('right') && player.flipX && !k.isKeyDown('left')) {
+                    player.flipX = false;
+                } else if (k.isKeyDown('left') && !player.flipX && !k.isKeyDown('right')) {
+                    player.flipX = true;
+                }
+
+                if (k.isKeyDown('right') && k.isKeyDown('left')) player.play('idle');
             });
         }
     }

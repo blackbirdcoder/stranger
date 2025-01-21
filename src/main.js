@@ -23,7 +23,7 @@ import { Level } from '/src/modules/level.js';
     player.make(k);
     player.setParameters(settings.hero.speed, settings.hero.jump);
     const stage = level.buildLocation(k, 'stageZero', layerDataStageZero, player);
-    player.launchMovement();
+    player.launchMovement(k);
 
     // -------------  Cam
     k.onUpdate(() => {
