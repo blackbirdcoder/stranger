@@ -1,15 +1,15 @@
 export const Player = (function implementer() {
     let player = null;
-    const parameters = {
-        speed: 300,
-        jump: 400,
-    };
+    const parameters = Object.freeze({
+        speed: 170,
+        jump: 435,
+    });
 
     function make(k) {
         player = k.make([
             k.sprite('player'),
-            k.area({ shape: new k.Rect(k.vec2(6, 0), 16, 32) }),
-            k.body(),
+            k.area({ shape: new k.Rect(k.vec2(10, 0), 10, 32) }),
+            k.body({ mass: 200, jumpForce: 200 }),
             k.anchor('topleft'),
             k.pos(0, 0),
             'player',

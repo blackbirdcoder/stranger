@@ -14,11 +14,10 @@ import { Level } from '/src/modules/level.js';
         scale: 1,
         debugKey: 'd', // DELETE
     });
+    k.setGravity(settings.scene.gravity);
     k.loadRoot('./');
     k.debug.inspect = true; // DELETE
     loader.load(k);
-    k.setGravity(1000);
-
     // TODO: Make a distinction by scenes
     player.make(k);
     const stage = level.buildLocation(k, 'stageZero', layerDataStageZero, player);

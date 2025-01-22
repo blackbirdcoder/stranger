@@ -4,6 +4,7 @@ export const Settings = (function implementer(colors) {
     const scene = {
         width: 800,
         height: 600,
+        gravity: 1400,
     };
 
     return Object.freeze({
