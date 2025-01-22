@@ -1,17 +1,19 @@
 export const Player = (function implementer() {
     let player = null;
     const parameters = {
-        speed: undefined,
-        jump: undefined,
+        speed: 300,
+        jump: 400,
     };
 
     function make(k) {
-        player = k.make([k.sprite('player'), k.area(), k.body(), k.anchor('topleft'), k.pos(0, 0), 'player']);
-    }
-
-    function setParameters(speed, jump) {
-        parameters.speed = speed;
-        parameters.jump = jump;
+        player = k.make([
+            k.sprite('player'),
+            k.area({ shape: new k.Rect(k.vec2(6, 0), 16, 32) }),
+            k.body(),
+            k.anchor('topleft'),
+            k.pos(0, 0),
+            'player',
+        ]);
     }
 
     function setPosition(x, y) {
@@ -83,7 +85,6 @@ export const Player = (function implementer() {
         make: make,
         setPosition: setPosition,
         get: get,
-        setParameters: setParameters,
         launchMovement: launchMovement,
     });
 })();

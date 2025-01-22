@@ -21,7 +21,6 @@ import { Level } from '/src/modules/level.js';
 
     // TODO: Make a distinction by scenes
     player.make(k);
-    player.setParameters(settings.hero.speed, settings.hero.jump);
     const stage = level.buildLocation(k, 'stageZero', layerDataStageZero, player);
     player.launchMovement(k);
 
