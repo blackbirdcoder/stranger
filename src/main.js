@@ -1,5 +1,6 @@
 'use strict';
 import kaplay from 'kaplay';
+import { zzfx } from '/src/libs/zzfx.micro.js';
 import { Settings } from '/src/modules/settings.js';
 import { Loader } from '/src/modules/loader.js';
 import { layers as layerDataStageZero } from '/src/data/stageZero.json' assert { type: 'JSON' };
@@ -17,6 +18,7 @@ import { Level } from '/src/modules/level.js';
     k.setGravity(settings.scene.gravity);
     k.loadRoot('./');
     k.debug.inspect = true; // DELETE
+
     loader.load(k);
     // TODO: Make a distinction by scenes
     player.make(k);
