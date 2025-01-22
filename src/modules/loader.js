@@ -24,6 +24,8 @@ export const Loader = (function implementer() {
         'player',
     ];
 
+    const fontName = 'SilkscreenRegular';
+
     function load(k) {
         for (let i = 0; i < spriteNames.length; i++) {
             if (spriteNames[i] === 'player') {
@@ -57,6 +59,8 @@ export const Loader = (function implementer() {
                 k.loadSprite(`${spriteNames[i]}`, `sprites/${spriteNames[i]}.png`);
             }
         }
+
+        k.loadFont(`${fontName}`, `font/${fontName}.woff2`);
     }
 
     return {
