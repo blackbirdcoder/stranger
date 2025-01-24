@@ -19,6 +19,8 @@ export const Level = (function implementer() {
                     if (object.name === 'player') {
                         player.setPosition(object.x, object.y);
                         stage.add(player.get());
+                    } else if (object.name === 'light') {
+                        stage.add([k.sprite('light'), k.pos(object.x, object.y), k.opacity(0.8), k.z(10)]);
                     }
                     continue;
                 }
