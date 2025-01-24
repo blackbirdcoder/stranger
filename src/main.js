@@ -4,6 +4,7 @@ import { zzfx } from '/src/libs/zzfx.micro.js';
 import { Settings } from '/src/modules/settings.js';
 import { Loader } from '/src/modules/loader.js';
 import { layers as layerDataStageZero } from '/src/data/stageZero.json' assert { type: 'JSON' };
+import { layers as layerDataStageOne } from '/src/data/stageOne.json' assert { type: 'JSON' };
 import { Player } from '/src/modules/player.js';
 import { Level } from '/src/modules/level.js';
 
@@ -18,19 +19,18 @@ import { Level } from '/src/modules/level.js';
     k.setGravity(settings.scene.gravity);
     k.loadRoot('./');
     k.debug.inspect = true; // DELETE
-
     loader.load(k);
     // TODO: Make a distinction by scenes
     player.make(k);
-    const stage = level.buildLocation(k, 'stageZero', layerDataStageZero, player);
+    const stage = level.buildLocation(k, 'stageOne', layerDataStageOne, player);
     player.launchMovement(k);
 
     // -------------  Cam
     k.onUpdate(() => {
         const { x, y } = stage.get('player')[0].worldPos();
         //console.log(x, y);
-
-        k.setCamPos(x + 10, y - 90);
+        // k.setCamPos(x + 10, y - 90);
+        k.setCamPos(x, y);
         k.setCamScale(2, 2);
 
         // k.debug.log(k.debug.fps());

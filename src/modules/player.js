@@ -9,7 +9,7 @@ export const Player = (function implementer() {
         player = k.make([
             k.sprite('player'),
             k.area({ shape: new k.Rect(k.vec2(10, 0), 10, 32) }),
-            k.body({ mass: 200, jumpForce: 200 }),
+            k.body({ mass: 100, jumpForce: 200 }),
             k.anchor('topleft'),
             k.pos(0, 0),
             'player',

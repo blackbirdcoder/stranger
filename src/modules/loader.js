@@ -1,5 +1,6 @@
 export const Loader = (function implementer() {
     const spriteNames = [
+        'stageOne',
         'stageZero',
         'barbs',
         'battery',
@@ -22,6 +23,7 @@ export const Loader = (function implementer() {
         'scabWall',
         'start',
         'player',
+        'arrow',
     ];
 
     const fontName = 'SilkscreenRegular';
