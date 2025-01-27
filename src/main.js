@@ -6,9 +6,10 @@ import { Loader } from '/src/modules/loader.js';
 import { layers as layerDataStageZero } from '/src/data/stageZero.json' assert { type: 'JSON' };
 import { layers as layerDataStageOne } from '/src/data/stageOne.json' assert { type: 'JSON' };
 import { Player } from '/src/modules/player.js';
+import { Platform } from '/src/modules/platform.js';
 import { Level } from '/src/modules/level.js';
 
-(function main(settings, loader, player, level) {
+(function main(settings, loader, player, platform, level) {
     const k = kaplay({
         width: settings.scene.width,
         height: settings.scene.height,
@@ -20,10 +21,19 @@ import { Level } from '/src/modules/level.js';
     k.loadRoot('./');
     k.debug.inspect = true; // DELETE
     loader.load(k);
+
     // TODO: Make a distinction by scenes
+    // =============== Scene 1 (Stage)
     player.make(k);
-    const stage = level.buildLocation(k, 'stageOne', layerDataStageOne, player);
+    const stage = level.buildLocation(k, 'stageOne', layerDataStageOne, player, platform);
     player.launchMovement(k);
+    const flyPlatforms = [...stage.get('vertical'), ...stage.get('horizontal')];
+    flyPlatforms[1].setSpeed(40);
+    k.onUpdate(() => {
+        flyPlatforms.forEach((flyPlatform) => flyPlatform.navigate());
+    });
+
+    // =========================
 
     // -------------  Cam
     k.onUpdate(() => {
@@ -35,4 +45,4 @@ import { Level } from '/src/modules/level.js';
 
         // k.debug.log(k.debug.fps());
     });
-})(Settings, Loader, Player, Level);
+})(Settings, Loader, Player, Platform, Level);

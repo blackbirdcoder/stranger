@@ -24,6 +24,9 @@ export const Loader = (function implementer() {
         'player',
         'arrow',
         'light',
+        'flyPlatformS',
+        'flyPlatformM',
+        'flyPlatformL',
     ];
 
     const fontName = 'SilkscreenRegular';
