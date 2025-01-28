@@ -3,13 +3,16 @@ export const Player = (function implementer() {
     const parameters = Object.freeze({
         speed: 170,
         jump: 435,
+        jumpForce: 200,
+        mass: 100,
+        maxVelocity: 500,
     });
 
     function make(k) {
         player = k.make([
             k.sprite('player'),
             k.area({ shape: new k.Rect(k.vec2(10, 0), 10, 32) }),
-            k.body({ mass: 100, jumpForce: 200, maxVelocity: 500 }),
+            k.body({ mass: parameters.mass, jumpForce: parameters.jumpForce, maxVelocity: parameters.maxVelocity }),
             k.anchor('topleft'),
             k.pos(0, 0),
             k.z(9),
