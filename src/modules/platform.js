@@ -13,13 +13,13 @@ export const Platform = (function implementer() {
             k.timer(),
             { speed: platform.speed },
             platform.type,
-            _fly(k, platform.x, platform.y, platform.type, platform.dir),
-            _speed(),
+            _wrapFly(k, platform.x, platform.y, platform.type, platform.dir),
+            _wrapSpeed(),
         ]);
         return gameObject;
     }
 
-    function _fly(k, endX, endY, type, dir) {
+    function _wrapFly(k, endX, endY, type, dir) {
         let start = null;
 
         function _movableNumber(endPosition, startPosition, currentPosition) {
@@ -50,7 +50,7 @@ export const Platform = (function implementer() {
         };
     }
 
-    function _speed() {
+    function _wrapSpeed() {
         return {
             getSpeed() {
                 return this.speed;
