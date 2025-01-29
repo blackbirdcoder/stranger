@@ -13,23 +13,36 @@ export const Platform = (function implementer() {
             k.timer(),
             { speed: platform.speed },
             platform.type,
-            _fly(platform.x, platform.y, platform.type, platform.dir),
+            _fly(k, platform.x, platform.y, platform.type, platform.dir),
             _speed(),
         ]);
         return gameObject;
     }
 
-    function _fly(endX, endY, type, dir) {
+    function _fly(k, endX, endY, type, dir) {
         let start = null;
+
+        function _movableNumber(endPosition, startPosition, currentPosition) {
+            const fullDistance = Math.abs(endPosition - startPosition);
+            const traveledDistance = Math.abs(currentPosition - startPosition);
+            return traveledDistance / fullDistance;
+        }
+
         return {
             navigate() {
                 start ??= this.pos;
                 if (type === 'vertical') {
-                    this.move(0, dir * this.speed);
+                    let number = _movableNumber(endY, start.y, this.pos.y);
+                    if (dir < 0) number = 1 - number;
+                    const easeNumber = k.easings.easeInOutSine(number / 2);
+                    this.move(0, dir * (this.speed * (1 - easeNumber)));
                     if (Math.round(this.pos.y) <= Math.round(endY)) dir = 1;
                     if (Math.round(this.pos.y) >= Math.round(start.y)) dir = -1;
                 } else if (type === 'horizontal') {
-                    this.move(dir * this.speed, 0);
+                    let number = _movableNumber(endX, start.x, this.pos.x);
+                    if (dir < 0) number = 1 - number;
+                    const easeNumber = k.easings.easeOutSine(number / 2);
+                    this.move(dir * (this.speed * (1 - easeNumber)), 0);
                     if (Math.round(this.pos.x) >= Math.round(endX)) dir = -1;
                     if (Math.round(this.pos.x) <= Math.round(start.x)) dir = 1;
                 }

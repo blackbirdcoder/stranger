@@ -23,12 +23,14 @@ import { Level } from '/src/modules/level.js';
     loader.load(k);
 
     // TODO: Make a distinction by scenes
+    //k.easings.easeOutQuad()
     // =============== Scene 1 (Stage)
     player.make(k);
     const stage = level.buildLocation(k, 'stageOne', layerDataStageOne, player, platform);
     player.launchMovement(k);
     const flyPlatforms = [...stage.get('vertical'), ...stage.get('horizontal')];
-    flyPlatforms[1].setSpeed(40);
+    flyPlatforms[0].setSpeed(36);
+    flyPlatforms[1].setSpeed(30);
     k.onUpdate(() => {
         flyPlatforms.forEach((flyPlatform) => flyPlatform.navigate());
     });
