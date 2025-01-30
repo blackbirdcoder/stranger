@@ -17,6 +17,7 @@ export const Loader = (function implementer() {
         'iconBattery',
         'iconCat',
         'iconHeart',
+        'iconDollar',
         'mucus',
         'scabFloor',
         'scabWall',

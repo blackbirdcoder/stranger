@@ -8,8 +8,9 @@ import { layers as layerDataStageOne } from '/src/data/stageOne.json' assert { t
 import { Player } from '/src/modules/player.js';
 import { Platform } from '/src/modules/platform.js';
 import { Level } from '/src/modules/level.js';
+import { Dashboard } from '/src/modules/dashboard.js';
 
-(function main(settings, loader, player, platform, level) {
+(function main(settings, loader, player, platform, level, dashboard) {
     const k = kaplay({
         width: settings.scene.width,
         height: settings.scene.height,
@@ -23,7 +24,6 @@ import { Level } from '/src/modules/level.js';
     loader.load(k);
 
     // TODO: Make a distinction by scenes
-    //k.easings.easeOutQuad()
     // =============== Scene 1 (Stage)
     player.make(k);
     const stage = level.buildLocation(k, 'stageOne', layerDataStageOne, player, platform);
@@ -35,16 +35,30 @@ import { Level } from '/src/modules/level.js';
         flyPlatforms.forEach((flyPlatform) => flyPlatform.navigate());
     });
 
+    k.onDraw(() => {
+        dashboard.created(
+            k,
+            settings.scene.width,
+            settings.colors.get('swatch20'),
+            settings.colors.get('swatch16'),
+            k.getCamPos(),
+            stage.get('player')[0].getLife(),
+            stage.get('player')[0].getBattery(),
+            stage.get('player')[0].getMaxBattery(),
+            stage.get('player')[0].getCat(),
+            stage.get('player')[0].getMoney()
+        );
+    });
     // =========================
 
     // -------------  Cam
     k.onUpdate(() => {
         const { x, y } = stage.get('player')[0].worldPos();
-        //console.log(x, y);
+        //console.log(k.getCamPos());
         // k.setCamPos(x + 10, y - 90);
         k.setCamPos(x, y);
         k.setCamScale(2, 2);
 
         // k.debug.log(k.debug.fps());
     });
-})(Settings, Loader, Player, Platform, Level);
+})(Settings, Loader, Player, Platform, Level, Dashboard);

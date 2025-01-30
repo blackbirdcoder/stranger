@@ -8,6 +8,25 @@ export const Player = (function implementer() {
         maxVelocity: 500,
     });
 
+    const achievements = {
+        life: {
+            max: 4,
+            min: 0,
+            current: 3,
+        },
+        battery: {
+            max: 10,
+            min: 0,
+            current: 0,
+        },
+        cat: {
+            current: 0,
+        },
+        money: {
+            current: 0,
+        },
+    };
+
     function make(k) {
         player = k.make([
             k.sprite('player'),
@@ -17,6 +36,10 @@ export const Player = (function implementer() {
             k.pos(0, 0),
             k.z(9),
             'player',
+            _wrapLife(),
+            _wrapBattery(),
+            _wrapCat(),
+            _wrapMoney(),
         ]);
     }
 
@@ -83,6 +106,62 @@ export const Player = (function implementer() {
     function _checkExistence() {
         if (!player) throw new Error('No game object, player not created!');
         return true;
+    }
+
+    function _wrapLife() {
+        return {
+            addLife() {
+                if (achievements.life.current < achievements.life.max) achievements.life.current += 1;
+            },
+            decreaseLife() {
+                if (achievements.life.current > achievements.life.min) achievements.life.max -= 1;
+            },
+            checkLife() {
+                return achievements.life.current === achievements.life.min ? false : true;
+            },
+            getLife() {
+                return achievements.life.current;
+            },
+        };
+    }
+
+    function _wrapBattery() {
+        return {
+            addBattery() {
+                if (achievements.battery.current < achievements.battery.max) achievements.battery.current += 1;
+            },
+            getMaxBattery() {
+                return achievements.battery.max;
+            },
+            getBattery() {
+                return achievements.battery.current;
+            },
+            checkBattery() {
+                return achievements.battery.current === achievements.battery.max ? true : false;
+            },
+        };
+    }
+
+    function _wrapCat() {
+        return {
+            addCat() {
+                achievements.cat.current += 1;
+            },
+            getCat() {
+                return achievements.cat.current;
+            },
+        };
+    }
+
+    function _wrapMoney() {
+        return {
+            setMoney(number) {
+                achievements.money.current += number;
+            },
+            getMoney() {
+                return achievements.money.current;
+            },
+        };
     }
 
     return Object.freeze({
