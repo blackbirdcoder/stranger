@@ -9,8 +9,10 @@ import { Player } from '/src/modules/player.js';
 import { Platform } from '/src/modules/platform.js';
 import { Level } from '/src/modules/level.js';
 import { Dashboard } from '/src/modules/dashboard.js';
+import { Camera } from '/src/modules/camera.js';
+import { Screen } from '/src/modules/screen.js';
 
-(function main(settings, loader, player, platform, level, dashboard) {
+(function main(settings, loader, player, platform, level, dashboard, camera, screen) {
     const k = kaplay({
         width: settings.scene.width,
         height: settings.scene.height,
@@ -23,42 +25,51 @@ import { Dashboard } from '/src/modules/dashboard.js';
     k.debug.inspect = true; // DELETE
     loader.load(k);
 
-    // TODO: Make a distinction by scenes
-    // =============== Scene 1 (Stage)
-    player.make(k);
-    const stage = level.buildLocation(k, 'stageOne', layerDataStageOne, player, platform);
-    player.launchMovement(k);
-    const flyPlatforms = [...stage.get('vertical'), ...stage.get('horizontal')];
-    flyPlatforms[0].setSpeed(36);
-    flyPlatforms[1].setSpeed(30);
-    k.onUpdate(() => {
-        flyPlatforms.forEach((flyPlatform) => flyPlatform.navigate());
+    k.scene('start', (screen, settings) => {
+        const startScreen = screen.start(k);
+        const baseColor = settings.colors.get('swatch11');
+        const accentColor = settings.colors.get('swatch19');
+        startScreen.invite(baseColor, accentColor);
+        startScreen.instruction(baseColor, accentColor);
+
+        k.onDraw(() => {
+            startScreen.bg();
+        });
+
+        k.onKeyPress('enter', () => {
+            k.go('gameStageOne', settings, player, platform, level, dashboard, camera);
+        });
     });
 
-    k.onDraw(() => {
-        dashboard.created(
-            k,
-            settings.scene.width,
-            settings.colors.get('swatch20'),
-            settings.colors.get('swatch16'),
-            k.getCamPos(),
-            stage.get('player')[0].getLife(),
-            stage.get('player')[0].getBattery(),
-            stage.get('player')[0].getMaxBattery(),
-            stage.get('player')[0].getCat(),
-            stage.get('player')[0].getMoney()
-        );
-    });
-    // =========================
+    k.scene('gameStageOne', (settings, player, platform, level, dashboard, camera) => {
+        player.make(k);
+        const stage = level.buildLocation(k, 'stageOne', layerDataStageOne, player, platform);
+        player.launchMovement(k);
+        const flyPlatforms = [...stage.get('vertical'), ...stage.get('horizontal')];
+        flyPlatforms[0].setSpeed(36);
+        flyPlatforms[1].setSpeed(30);
 
-    // -------------  Cam
-    k.onUpdate(() => {
-        const { x, y } = stage.get('player')[0].worldPos();
-        //console.log(k.getCamPos());
-        // k.setCamPos(x + 10, y - 90);
-        k.setCamPos(x, y);
-        k.setCamScale(2, 2);
+        k.onUpdate(() => {
+            flyPlatforms.forEach((flyPlatform) => flyPlatform.navigate());
+            camera.start(k, stage.get('player')[0].worldPos());
+        });
 
-        // k.debug.log(k.debug.fps());
+        k.onDraw(() => {
+            dashboard.created(
+                k,
+                settings.scene.width,
+                settings.colors.get('swatch20'),
+                settings.colors.get('swatch16'),
+                k.getCamPos(),
+                stage.get('player')[0].getLife(),
+                stage.get('player')[0].getBattery(),
+                stage.get('player')[0].getMaxBattery(),
+                stage.get('player')[0].getCat(),
+                stage.get('player')[0].getMoney()
+            );
+        });
     });
-})(Settings, Loader, Player, Platform, Level, Dashboard);
+
+    k.go('start', screen, settings);
+    //k.go('gameStageOne', settings, player, platform, level, dashboard, camera);
+})(Settings, Loader, Player, Platform, Level, Dashboard, Camera, Screen);
