@@ -11,8 +11,9 @@ import { Level } from '/src/modules/level.js';
 import { Dashboard } from '/src/modules/dashboard.js';
 import { Camera } from '/src/modules/camera.js';
 import { Screen } from '/src/modules/screen.js';
+import { Enemies } from '/src/modules/enemies.js';
 
-(function main(settings, loader, player, platform, level, dashboard, camera, screen) {
+(function main(settings, loader, player, platform, level, dashboard, camera, screen, enemies) {
     const k = kaplay({
         width: settings.scene.width,
         height: settings.scene.height,
@@ -37,20 +38,23 @@ import { Screen } from '/src/modules/screen.js';
         });
 
         k.onKeyPress('enter', () => {
-            k.go('gameStageOne', settings, player, platform, level, dashboard, camera);
+            k.go('gameStageOne', settings, player, platform, level, dashboard, camera, enemies);
         });
     });
 
-    k.scene('gameStageOne', (settings, player, platform, level, dashboard, camera) => {
+    k.scene('gameStageOne', (settings, player, platform, level, dashboard, camera, enemies) => {
         player.make(k);
-        const stage = level.buildLocation(k, 'stageOne', layerDataStageOne, player, platform);
+        const stage = level.buildLocation(k, 'stageOne', layerDataStageOne, player, platform, enemies);
         player.launchMovement(k);
         const flyPlatforms = [...stage.get('vertical'), ...stage.get('horizontal')];
         flyPlatforms[0].setSpeed(36);
         flyPlatforms[1].setSpeed(30);
+        const enemyGangsters = stage.get('gangster');
+        enemyGangsters.forEach((gangster) => gangster.dirSwitchingTracking());
 
         k.onUpdate(() => {
             flyPlatforms.forEach((flyPlatform) => flyPlatform.navigate());
+            enemyGangsters.forEach((gangster) => gangster.wander());
             camera.start(k, stage.get('player')[0].worldPos());
         });
 
@@ -72,4 +76,4 @@ import { Screen } from '/src/modules/screen.js';
 
     k.go('start', screen, settings);
     //k.go('gameStageOne', settings, player, platform, level, dashboard, camera);
-})(Settings, Loader, Player, Platform, Level, Dashboard, Camera, Screen);
+})(Settings, Loader, Player, Platform, Level, Dashboard, Camera, Screen, Enemies);

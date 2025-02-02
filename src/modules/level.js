@@ -1,16 +1,28 @@
 export const Level = (function implementer() {
-    function buildLocation(k, levelSpriteName, layersLevel, player, platform) {
+    function buildLocation(k, levelSpriteName, layersLevel, player, platform, enemies) {
         // TODO: Implement levels
         const stage = k.add([k.sprite(levelSpriteName), k.pos(0, 0)]);
         console.log(layersLevel);
         for (const layer of layersLevel) {
             if (layer.name === 'Colliders') {
+                console.log(layer);
                 for (const object of layer.objects) {
-                    stage.add([
-                        k.area({ shape: new Rect(k.vec2(0), object.width, object.height) }),
-                        k.body({ isStatic: true }),
-                        k.pos(object.x, object.y),
-                    ]);
+                    if (object.name === 'barrierForEnemy') {
+                        stage.add([
+                            k.area({
+                                shape: new Rect(k.vec2(0), object.width, object.height),
+                                collisionIgnore: ['player'],
+                            }),
+                            k.body({ isStatic: true }),
+                            k.pos(object.x, object.y),
+                        ]);
+                    } else {
+                        stage.add([
+                            k.area({ shape: new Rect(k.vec2(0), object.width, object.height) }),
+                            k.body({ isStatic: true }),
+                            k.pos(object.x, object.y),
+                        ]);
+                    }
                 }
             }
             if (layer.name === 'Positions') {
@@ -24,6 +36,12 @@ export const Level = (function implementer() {
                         if (object.properties[0].name === 'data') {
                             const flyPlatform = platform.parser(k, object.properties[0].value, object.x, object.y);
                             stage.add(flyPlatform);
+                        }
+                    } else if (object.name === 'enemy') {
+                        if (object.properties[0].value === 'gangster') {
+                            console.log(object);
+                            const gangster = enemies.gangster(k);
+                            stage.add(gangster.make(object.x, object.y));
                         }
                     }
                 }

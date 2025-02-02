@@ -439,6 +439,17 @@
                  "width":22.9873263888887,
                  "x":1637.00202020202,
                  "y":704.004971590909
+                }, 
+                {
+                 "height":32,
+                 "id":51,
+                 "name":"barrierForEnemy",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":32,
+                 "x":928.0078125,
+                 "y":896.003472222222
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -522,6 +533,24 @@
                  "width":0,
                  "x":1440.00035511364,
                  "y":735.991832386364
+                }, 
+                {
+                 "height":0,
+                 "id":50,
+                 "name":"enemy",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"type",
+                         "type":"string",
+                         "value":"gangster"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1088.00303819444,
+                 "y":895.994444444444
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -530,7 +559,7 @@
          "y":0
         }],
  "nextlayerid":7,
- "nextobjectid":50,
+ "nextobjectid":52,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.1-99-gec89c545",

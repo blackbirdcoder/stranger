@@ -28,6 +28,7 @@ export const Loader = (function implementer() {
         'flyPlatformS',
         'flyPlatformM',
         'flyPlatformL',
+        'hitFx',
     ];
 
     const fontName = 'SilkscreenRegular';
@@ -58,6 +59,35 @@ export const Loader = (function implementer() {
                             from: 18,
                             to: 23,
                             loop: true,
+                        },
+                    },
+                });
+            } else if (spriteNames[i] === 'gangster1' || spriteNames[i] === 'gangster2') {
+                k.loadSprite(`${spriteNames[i]}`, `sprites/${spriteNames[i]}.png`, {
+                    sliceX: 6,
+                    sliceY: 2,
+                    anims: {
+                        walk: {
+                            from: 0,
+                            to: 5,
+                            loop: true,
+                        },
+                        died: {
+                            from: 6,
+                            to: 11,
+                            speed: 12,
+                        },
+                    },
+                });
+            } else if (spriteNames[i] === 'hitFx') {
+                k.loadSprite(`${spriteNames[i]}`, `sprites/${spriteNames[i]}.png`, {
+                    sliceX: 3,
+                    sliceY: 1,
+                    anims: {
+                        effect: {
+                            from: 0,
+                            to: 2,
+                            speed: 34,
                         },
                     },
                 });

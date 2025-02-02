@@ -77,6 +77,7 @@ export const Player = (function implementer() {
             player.onKeyRelease(['space', 'up', 'right', 'left'], (key) => {
                 if (key === 'space') {
                     player.play('attack');
+                    _attack(k);
                 } else {
                     if (player.curAnim() !== 'idle') player.play('idle');
                 }
@@ -162,6 +163,22 @@ export const Player = (function implementer() {
                 return achievements.money.current;
             },
         };
+    }
+
+    function _attack(k) {
+        let posX = player.flipX ? player.pos.x - 32 : player.pos.x + 32;
+
+        const hit = k.add([
+            k.sprite('hitFx', { anim: 'effect', flipX: player.flipX }),
+            k.area({ collisionIgnore: ['player'] }),
+            k.body({ isStatic: true }),
+            k.pos(posX, player.pos.y),
+            'hitFx',
+        ]);
+
+        hit.onUpdate(() => {
+            if (hit.curAnim() !== 'effect') hit.destroy();
+        });
     }
 
     return Object.freeze({
