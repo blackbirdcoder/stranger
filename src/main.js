@@ -42,23 +42,27 @@ import { Gangster } from '/src/modules/enemies/gangster.js';
         });
     });
 
+    k.scene('gameOver', (screen, settings) => {
+        k.add([k.text('Game Over'), k.pos(10, 10)]);
+    });
+
     k.scene('gameStageOne', (settings, player, platform, level, dashboard, camera, gangster) => {
-        player.make(k);
         const stage = level.buildLocation(k, 'stageOne', layerDataStageOne, player, platform, gangster);
-        player.launchMovement(k);
+        const hero = player.get();
+        hero.assumeAttack(k, screen, settings);
         const flyPlatforms = [...stage.get('vertical'), ...stage.get('horizontal')];
         flyPlatforms[0].setSpeed(36);
         flyPlatforms[1].setSpeed(30);
         const enemyGangsters = stage.get('gangster');
         enemyGangsters.forEach((gangster) => {
             gangster.dirSwitchingTracking();
-            gangster.assumeAttack(settings.colors.get('swatch10'));
+            gangster.assumeAttack();
         });
 
         k.onUpdate(() => {
             flyPlatforms.forEach((flyPlatform) => flyPlatform.navigate());
             enemyGangsters.forEach((gangster) => gangster.wander());
-            camera.start(k, stage.get('player')[0].worldPos());
+            camera.start(k, hero.worldPos());
         });
 
         k.onDraw(() => {
@@ -68,11 +72,11 @@ import { Gangster } from '/src/modules/enemies/gangster.js';
                 settings.colors.get('swatch20'),
                 settings.colors.get('swatch16'),
                 k.getCamPos(),
-                stage.get('player')[0].getLife(),
-                stage.get('player')[0].getBattery(),
-                stage.get('player')[0].getMaxBattery(),
-                stage.get('player')[0].getCat(),
-                stage.get('player')[0].getMoney()
+                hero.getLife(),
+                hero.getBattery(),
+                hero.getMaxBattery(),
+                hero.getCat(),
+                hero.getMoney()
             );
         });
     });

@@ -6,6 +6,7 @@ export const Player = (function implementer() {
         jumpForce: 200,
         mass: 100,
         maxVelocity: 500,
+        damage: 1,
     });
 
     const achievements = {
@@ -35,11 +36,13 @@ export const Player = (function implementer() {
             k.anchor('topleft'),
             k.pos(0, 0),
             k.z(9),
+            k.health(achievements.life.current),
             'player',
             _wrapLife(),
             _wrapBattery(),
             _wrapCat(),
             _wrapMoney(),
+            _wrapAssumeAttack(),
         ]);
     }
 
@@ -115,7 +118,7 @@ export const Player = (function implementer() {
                 if (achievements.life.current < achievements.life.max) achievements.life.current += 1;
             },
             decreaseLife() {
-                if (achievements.life.current > achievements.life.min) achievements.life.max -= 1;
+                if (achievements.life.current > achievements.life.min) achievements.life.current -= parameters.damage;
             },
             checkLife() {
                 return achievements.life.current === achievements.life.min ? false : true;
@@ -179,6 +182,42 @@ export const Player = (function implementer() {
         hit.onUpdate(() => {
             if (hit.curAnim() !== 'effect') hit.destroy();
         });
+    }
+
+    function _wrapAssumeAttack() {
+        return {
+            assumeAttack(k, screen, settings) {
+                this.onCollide((other) => {
+                    if (other.is('gangster')) {
+                        this.hurt(parameters.damage);
+                        this.decreaseLife();
+                        this.jump(200);
+
+                        if (other.flipX) {
+                            this.pos.x -= 8;
+                        } else {
+                            this.pos.x += 8;
+                        }
+
+                        const direction = [k.vec2(-1, -1), k.UP, k.vec2(1, -1)];
+                        for (let i = 0; i < 3; i++) {
+                            k.add([
+                                k.pos(this.pos.x + k.randi(5, 10), this.pos.y),
+                                k.sprite('hitLightning'),
+                                k.scale(0.3),
+                                k.opacity(0.5),
+                                k.lifespan(0.1, { fade: 0.1 }),
+                                k.move(direction[i], k.randi(50, 75)),
+                            ]);
+                        }
+
+                        if (!this.checkLife()) {
+                            k.go('gameOver', screen, settings);
+                        }
+                    }
+                });
+            },
+        };
     }
 
     return Object.freeze({
