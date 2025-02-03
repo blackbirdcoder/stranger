@@ -11,9 +11,9 @@ import { Level } from '/src/modules/level.js';
 import { Dashboard } from '/src/modules/dashboard.js';
 import { Camera } from '/src/modules/camera.js';
 import { Screen } from '/src/modules/screen.js';
-import { Enemies } from '/src/modules/enemies.js';
+import { Gangster } from '/src/modules/enemies/gangster.js';
 
-(function main(settings, loader, player, platform, level, dashboard, camera, screen, enemies) {
+(function main(settings, loader, player, platform, level, dashboard, camera, screen, gangster) {
     const k = kaplay({
         width: settings.scene.width,
         height: settings.scene.height,
@@ -38,19 +38,22 @@ import { Enemies } from '/src/modules/enemies.js';
         });
 
         k.onKeyPress('enter', () => {
-            k.go('gameStageOne', settings, player, platform, level, dashboard, camera, enemies);
+            k.go('gameStageOne', settings, player, platform, level, dashboard, camera, gangster);
         });
     });
 
-    k.scene('gameStageOne', (settings, player, platform, level, dashboard, camera, enemies) => {
+    k.scene('gameStageOne', (settings, player, platform, level, dashboard, camera, gangster) => {
         player.make(k);
-        const stage = level.buildLocation(k, 'stageOne', layerDataStageOne, player, platform, enemies);
+        const stage = level.buildLocation(k, 'stageOne', layerDataStageOne, player, platform, gangster);
         player.launchMovement(k);
         const flyPlatforms = [...stage.get('vertical'), ...stage.get('horizontal')];
         flyPlatforms[0].setSpeed(36);
         flyPlatforms[1].setSpeed(30);
         const enemyGangsters = stage.get('gangster');
-        enemyGangsters.forEach((gangster) => gangster.dirSwitchingTracking());
+        enemyGangsters.forEach((gangster) => {
+            gangster.dirSwitchingTracking();
+            gangster.assumeAttack(settings.colors.get('swatch10'));
+        });
 
         k.onUpdate(() => {
             flyPlatforms.forEach((flyPlatform) => flyPlatform.navigate());
@@ -76,4 +79,4 @@ import { Enemies } from '/src/modules/enemies.js';
 
     k.go('start', screen, settings);
     //k.go('gameStageOne', settings, player, platform, level, dashboard, camera);
-})(Settings, Loader, Player, Platform, Level, Dashboard, Camera, Screen, Enemies);
+})(Settings, Loader, Player, Platform, Level, Dashboard, Camera, Screen, Gangster);

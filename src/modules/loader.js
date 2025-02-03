@@ -29,6 +29,7 @@ export const Loader = (function implementer() {
         'flyPlatformM',
         'flyPlatformL',
         'hitFx',
+        'hitStar',
     ];
 
     const fontName = 'SilkscreenRegular';
@@ -75,7 +76,7 @@ export const Loader = (function implementer() {
                         died: {
                             from: 6,
                             to: 11,
-                            speed: 12,
+                            speed: 34,
                         },
                     },
                 });

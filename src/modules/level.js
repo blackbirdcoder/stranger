@@ -1,11 +1,10 @@
 export const Level = (function implementer() {
-    function buildLocation(k, levelSpriteName, layersLevel, player, platform, enemies) {
+    function buildLocation(k, levelSpriteName, layersLevel, player, platform, gangster) {
         // TODO: Implement levels
         const stage = k.add([k.sprite(levelSpriteName), k.pos(0, 0)]);
         console.log(layersLevel);
         for (const layer of layersLevel) {
             if (layer.name === 'Colliders') {
-                console.log(layer);
                 for (const object of layer.objects) {
                     if (object.name === 'barrierForEnemy') {
                         stage.add([
@@ -39,9 +38,8 @@ export const Level = (function implementer() {
                         }
                     } else if (object.name === 'enemy') {
                         if (object.properties[0].value === 'gangster') {
-                            console.log(object);
-                            const gangster = enemies.gangster(k);
-                            stage.add(gangster.make(object.x, object.y));
+                            const enemyGangster = gangster.create(k);
+                            stage.add(enemyGangster.make(object.x, object.y));
                         }
                     }
                 }
