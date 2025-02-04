@@ -30,7 +30,7 @@ export const Loader = (function implementer() {
         'flyPlatformL',
         'hitFx',
         'hitStar',
-        'hitLightning',
+        'circle',
     ];
 
     const fontName = 'SilkscreenRegular';

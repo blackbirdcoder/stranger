@@ -187,8 +187,8 @@ export const Player = (function implementer() {
                         for (let i = 0; i < 3; i++) {
                             k.add([
                                 k.pos(this.pos.x + k.randi(5, 10), this.pos.y),
-                                k.sprite('hitLightning'),
-                                k.scale(0.3),
+                                k.sprite('circle'),
+                                k.scale(0.2),
                                 k.opacity(0.5),
                                 k.lifespan(0.1, { fade: 0.1 }),
                                 k.move(direction[i], k.randi(50, 75)),
