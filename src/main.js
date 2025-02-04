@@ -56,7 +56,7 @@ import { Gangster } from '/src/modules/enemies/gangster.js';
         const enemyGangsters = stage.get('gangster');
         enemyGangsters.forEach((gangster) => {
             gangster.dirSwitchingTracking();
-            gangster.assumeAttack();
+            gangster.assumeAttack(hero, settings.colors.get('swatch16'));
         });
 
         k.onUpdate(() => {

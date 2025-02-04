@@ -50,13 +50,30 @@ export const Gangster = (function implementer() {
 
     function _wrapAssumeAttack(k) {
         return {
-            assumeAttack() {
+            assumeAttack(hero, accentColor) {
                 this.onCollide((other) => {
                     if (other.is('hitFx')) {
                         this.hurt(parameters.damage);
                         if (this.hp() === 0) {
                             this.play('died');
                             k.wait(0.2, () => this.destroy());
+                            const randomMoney = k.randi(75, 176);
+                            k.add([
+                                k.text(`[accent]${randomMoney}$[/accent]`, {
+                                    font: 'SilkscreenRegular',
+                                    size: 16,
+                                    styles: {
+                                        accent: {
+                                            color: k.rgb(accentColor),
+                                        },
+                                    },
+                                }),
+                                k.pos(this.pos.x + k.randi(5, 10), this.pos.y),
+                                k.opacity(0.5),
+                                k.lifespan(0.3, { fade: 0.2 }),
+                                k.move(k.UP, k.randi(50, 75)),
+                            ]);
+                            k.wait(0.6, () => hero.setMoney(randomMoney));
                         } else {
                             this.pos.x += 8;
                             const direction = [k.vec2(-1, -1), k.UP, k.vec2(1, -1)];

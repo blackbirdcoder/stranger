@@ -212,7 +212,10 @@ export const Player = (function implementer() {
                         }
 
                         if (!this.checkLife()) {
-                            k.go('gameOver', screen, settings);
+                            k.wait(0.4, () => {
+                                this.destroy();
+                                k.go('gameOver', screen, settings);
+                            });
                         }
                     }
                 });
