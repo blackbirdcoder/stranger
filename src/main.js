@@ -79,6 +79,11 @@ import { Gangster } from '/src/modules/enemies/gangster.js';
                 hero.getMoney()
             );
         });
+
+        k.onKeyPress('r', () => {
+            hero.restart();
+            k.go('gameStageOne', settings, player, platform, level, dashboard, camera, gangster);
+        });
     });
 
     k.go('start', screen, settings);

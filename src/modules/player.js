@@ -9,24 +9,7 @@ export const Player = (function implementer() {
         damage: 1,
     });
 
-    const achievements = {
-        life: {
-            max: 4,
-            min: 0,
-            current: 3,
-        },
-        battery: {
-            max: 10,
-            min: 0,
-            current: 0,
-        },
-        cat: {
-            current: 0,
-        },
-        money: {
-            current: 0,
-        },
-    };
+    let achievements = _achievementsInit();
 
     function make(k) {
         player = k.make([
@@ -43,6 +26,7 @@ export const Player = (function implementer() {
             _wrapCat(),
             _wrapMoney(),
             _wrapAssumeAttack(),
+            _wrapRestart(),
         ]);
     }
 
@@ -219,6 +203,35 @@ export const Player = (function implementer() {
                         }
                     }
                 });
+            },
+        };
+    }
+
+    function _wrapRestart() {
+        return {
+            restart() {
+                achievements = _achievementsInit();
+            },
+        };
+    }
+
+    function _achievementsInit() {
+        return {
+            life: {
+                max: 4,
+                min: 0,
+                current: 3,
+            },
+            battery: {
+                max: 10,
+                min: 0,
+                current: 0,
+            },
+            cat: {
+                current: 0,
+            },
+            money: {
+                current: 0,
             },
         };
     }
