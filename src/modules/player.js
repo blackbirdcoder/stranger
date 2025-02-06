@@ -163,6 +163,13 @@ export const Player = (function implementer() {
             'hitFx',
         ]);
 
+        hit.onCollide((other) => {
+            if (other.is('barbs')) {
+                const info = k.add([k.sprite('dialogueNot'), k.pos(player.pos.x, player.pos.y - 30)]);
+                k.wait(0.2, () => info.destroy());
+            }
+        });
+
         hit.onUpdate(() => {
             if (hit.curAnim() !== 'effect') hit.destroy();
         });
@@ -172,7 +179,7 @@ export const Player = (function implementer() {
         return {
             assumeAttack(k, screen, settings) {
                 this.onCollide((other) => {
-                    if (other.is('gangster')) {
+                    if (other.is('gangster') || other.is('barbs')) {
                         this.hurt(parameters.damage);
                         this.decreaseLife();
                         this.jump(200);

@@ -1,5 +1,5 @@
 export const Level = (function implementer() {
-    function buildLocation(k, levelSpriteName, layersLevel, player, platform, gangster) {
+    function buildLocation(k, levelSpriteName, layersLevel, player, platform, gangster, barbs) {
         // TODO: Implement levels
         const stage = k.add([k.sprite(levelSpriteName), k.pos(0, 0)]);
         console.log(layersLevel);
@@ -42,6 +42,9 @@ export const Level = (function implementer() {
                         if (object.properties[0].value === 'gangster') {
                             const enemyGangster = gangster.create(k);
                             stage.add(enemyGangster.make(object.x, object.y));
+                        } else if (object.properties[0].value === 'barbs') {
+                            const enemyBarbs = barbs.create(k);
+                            stage.add(enemyBarbs.make(object.x, object.y));
                         }
                     }
                 }

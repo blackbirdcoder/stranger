@@ -12,8 +12,9 @@ import { Dashboard } from '/src/modules/dashboard.js';
 import { Camera } from '/src/modules/camera.js';
 import { Screen } from '/src/modules/screen.js';
 import { Gangster } from '/src/modules/enemies/gangster.js';
+import { Barbs } from '/src/modules/enemies/barbs.js';
 
-(function main(settings, loader, player, platform, level, dashboard, camera, screen, gangster) {
+(function main(settings, loader, player, platform, level, dashboard, camera, screen, gangster, barbs) {
     const k = kaplay({
         width: settings.scene.width,
         height: settings.scene.height,
@@ -38,7 +39,7 @@ import { Gangster } from '/src/modules/enemies/gangster.js';
         });
 
         k.onKeyPress('enter', () => {
-            k.go('gameStageOne', settings, player, platform, level, dashboard, camera, gangster);
+            k.go('gameStageOne', settings, player, platform, level, dashboard, camera, gangster, barbs);
         });
     });
 
@@ -46,8 +47,8 @@ import { Gangster } from '/src/modules/enemies/gangster.js';
         k.add([k.text('Game Over'), k.pos(10, 10)]);
     });
 
-    k.scene('gameStageOne', (settings, player, platform, level, dashboard, camera, gangster) => {
-        const stage = level.buildLocation(k, 'stageOne', layerDataStageOne, player, platform, gangster);
+    k.scene('gameStageOne', (settings, player, platform, level, dashboard, camera, gangster, barbs) => {
+        const stage = level.buildLocation(k, 'stageOne', layerDataStageOne, player, platform, gangster, barbs);
         const hero = player.get();
         hero.assumeAttack(k, screen, settings);
         const flyPlatforms = [...stage.get('vertical'), ...stage.get('horizontal')];
@@ -82,10 +83,10 @@ import { Gangster } from '/src/modules/enemies/gangster.js';
 
         k.onKeyPress('r', () => {
             hero.restart();
-            k.go('gameStageOne', settings, player, platform, level, dashboard, camera, gangster);
+            k.go('gameStageOne', settings, player, platform, level, dashboard, camera, gangster, barbs);
         });
     });
 
     k.go('start', screen, settings);
     //k.go('gameStageOne', settings, player, platform, level, dashboard, camera);
-})(Settings, Loader, Player, Platform, Level, Dashboard, Camera, Screen, Gangster);
+})(Settings, Loader, Player, Platform, Level, Dashboard, Camera, Screen, Gangster, Barbs);

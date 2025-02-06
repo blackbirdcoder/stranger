@@ -551,6 +551,24 @@
                  "width":0,
                  "x":1088.00303819444,
                  "y":895.994444444444
+                }, 
+                {
+                 "height":0,
+                 "id":52,
+                 "name":"enemy",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"type",
+                         "type":"string",
+                         "value":"barbs"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":832.001649305556,
+                 "y":896.001649305555
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -559,7 +577,7 @@
          "y":0
         }],
  "nextlayerid":7,
- "nextobjectid":52,
+ "nextobjectid":53,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.1-99-gec89c545",
