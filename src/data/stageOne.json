@@ -359,8 +359,8 @@
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":639.95652173913,
-                 "x":640.04347826087,
+                 "width":639.997667572463,
+                 "x":640.002332427537,
                  "y":288
                 }, 
                 {
@@ -450,6 +450,61 @@
                  "width":32,
                  "x":928.0078125,
                  "y":896.003472222222
+                }, 
+                {
+                 "height":31.9996448863636,
+                 "id":54,
+                 "name":"barrierForEnemy",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":31.9918323863636,
+                 "x":704.009943181818,
+                 "y":448.000355113636
+                }, 
+                {
+                 "height":31.9996,
+                 "id":55,
+                 "name":"barrierForEnemy",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":31.9918,
+                 "x":992.002474368687,
+                 "y":448.00033415404
+                }, 
+                {
+                 "height":31.9996,
+                 "id":56,
+                 "name":"barrierForEnemy",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":31.9918,
+                 "x":991.994218577075,
+                 "y":383.950792885376
+                }, 
+                {
+                 "height":31.9996,
+                 "id":57,
+                 "name":"barrierForEnemy",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":31.9918,
+                 "x":1216.00125909091,
+                 "y":384.003987878788
+                }, 
+                {
+                 "height":31.9996,
+                 "id":59,
+                 "name":"barrierForEnemy",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":31.9918,
+                 "x":608.0041,
+                 "y":255.99629375
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -569,6 +624,60 @@
                  "width":0,
                  "x":832.001649305556,
                  "y":896.001649305555
+                }, 
+                {
+                 "height":0,
+                 "id":53,
+                 "name":"enemy",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"type",
+                         "type":"string",
+                         "value":"gangster"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":768.001649305556,
+                 "y":448.008940972222
+                }, 
+                {
+                 "height":0,
+                 "id":58,
+                 "name":"enemy",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"type",
+                         "type":"string",
+                         "value":"gangster"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1088,
+                 "y":384
+                }, 
+                {
+                 "height":0,
+                 "id":60,
+                 "name":"enemy",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"type",
+                         "type":"string",
+                         "value":"gangster"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":736,
+                 "y":255.966666666667
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -577,7 +686,7 @@
          "y":0
         }],
  "nextlayerid":7,
- "nextobjectid":53,
+ "nextobjectid":61,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.1-99-gec89c545",

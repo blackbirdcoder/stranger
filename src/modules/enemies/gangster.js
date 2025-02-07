@@ -4,8 +4,6 @@ export const Gangster = (function implementer() {
         damage: 1,
         speed: 50,
     };
-    const dir = [1 * parameters.speed, -1 * parameters.speed];
-    let currentDir = dir[Math.floor(Math.random() * 2)];
 
     function create(k) {
         const spriteNames = ['gangster1', 'gangster2'];
@@ -28,10 +26,12 @@ export const Gangster = (function implementer() {
     }
 
     function _wrapWander() {
+        const dir = [1 * parameters.speed, -1 * parameters.speed];
+        let currentDir = dir[Math.floor(Math.random() * 2)];
         return {
             wander() {
                 this.move(currentDir, 0);
-                this.flipX = currentDir < 0 ? true : false;
+                currentDir = !this.flipX ? 1 * parameters.speed : -1 * parameters.speed;
             },
         };
     }
@@ -40,9 +40,7 @@ export const Gangster = (function implementer() {
         return {
             dirSwitchingTracking() {
                 this.onCollide((other) => {
-                    if (!other.is('player') && !other.is('hitFx')) {
-                        currentDir = currentDir < 0 ? 1 * parameters.speed : -1 * parameters.speed;
-                    }
+                    if (!other.is('player') && !other.is('hitFx')) this.flipX = !this.flipX;
                 });
             },
         };
