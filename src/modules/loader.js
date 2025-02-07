@@ -105,6 +105,31 @@ export const Loader = (function implementer() {
                         },
                     },
                 });
+            } else if (spriteNames[i] === 'scabFloor' || spriteNames[i] === 'scabWall') {
+                k.loadSprite(`${spriteNames[i]}`, `sprites/${spriteNames[i]}.png`, {
+                    sliceX: 6,
+                    sliceY: 1,
+                    anims: {
+                        idle: {
+                            from: 0,
+                            to: 5,
+                            loop: true,
+                        },
+                    },
+                });
+            } else if (spriteNames[i] === 'mucus') {
+                k.loadSprite(`${spriteNames[i]}`, `sprites/${spriteNames[i]}.png`, {
+                    sliceX: 6,
+                    sliceY: 1,
+                    anims: {
+                        fly: {
+                            from: 0,
+                            to: 5,
+                            speed: 12,
+                            loop: true,
+                        },
+                    },
+                });
             } else {
                 k.loadSprite(`${spriteNames[i]}`, `sprites/${spriteNames[i]}.png`);
             }

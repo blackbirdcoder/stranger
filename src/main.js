@@ -13,8 +13,9 @@ import { Camera } from '/src/modules/camera.js';
 import { Screen } from '/src/modules/screen.js';
 import { Gangster } from '/src/modules/enemies/gangster.js';
 import { Barbs } from '/src/modules/enemies/barbs.js';
+import { Scab } from '/src/modules/enemies/scab.js';
 
-(function main(settings, loader, player, platform, level, dashboard, camera, screen, gangster, barbs) {
+(function main(settings, loader, player, platform, level, dashboard, camera, screen, gangster, barbs, scab) {
     const k = kaplay({
         width: settings.scene.width,
         height: settings.scene.height,
@@ -39,7 +40,7 @@ import { Barbs } from '/src/modules/enemies/barbs.js';
         });
 
         k.onKeyPress('enter', () => {
-            k.go('gameStageOne', settings, player, platform, level, dashboard, camera, gangster, barbs);
+            k.go('gameStageOne', settings, player, platform, level, dashboard, camera, gangster, barbs, scab);
         });
     });
 
@@ -47,8 +48,8 @@ import { Barbs } from '/src/modules/enemies/barbs.js';
         k.add([k.text('Game Over'), k.pos(10, 10)]);
     });
 
-    k.scene('gameStageOne', (settings, player, platform, level, dashboard, camera, gangster, barbs) => {
-        const stage = level.buildLocation(k, 'stageOne', layerDataStageOne, player, platform, gangster, barbs);
+    k.scene('gameStageOne', (settings, player, platform, level, dashboard, camera, gangster, barbs, scab) => {
+        const stage = level.buildLocation(k, 'stageOne', layerDataStageOne, player, platform, gangster, barbs, scab);
         const hero = player.get();
         hero.assumeAttack(k, screen, settings);
         const flyPlatforms = [...stage.get('vertical'), ...stage.get('horizontal')];
@@ -59,6 +60,8 @@ import { Barbs } from '/src/modules/enemies/barbs.js';
             gangster.dirSwitchingTracking();
             gangster.assumeAttack(hero, settings.colors.get('swatch16'));
         });
+        const enemyScab = stage.get('scab');
+        enemyScab.forEach((scab) => scab.erupt());
 
         k.onUpdate(() => {
             flyPlatforms.forEach((flyPlatform) => flyPlatform.navigate());
@@ -83,10 +86,10 @@ import { Barbs } from '/src/modules/enemies/barbs.js';
 
         k.onKeyPress('r', () => {
             hero.restart();
-            k.go('gameStageOne', settings, player, platform, level, dashboard, camera, gangster, barbs);
+            k.go('gameStageOne', settings, player, platform, level, dashboard, camera, gangster, barbs, scab);
         });
     });
 
     k.go('start', screen, settings);
     //k.go('gameStageOne', settings, player, platform, level, dashboard, camera);
-})(Settings, Loader, Player, Platform, Level, Dashboard, Camera, Screen, Gangster, Barbs);
+})(Settings, Loader, Player, Platform, Level, Dashboard, Camera, Screen, Gangster, Barbs, Scab);

@@ -1,5 +1,5 @@
 export const Level = (function implementer() {
-    function buildLocation(k, levelSpriteName, layersLevel, player, platform, gangster, barbs) {
+    function buildLocation(k, levelSpriteName, layersLevel, player, platform, gangster, barbs, scab) {
         // TODO: Implement levels
         const stage = k.add([k.sprite(levelSpriteName), k.pos(0, 0)]);
         console.log(layersLevel);
@@ -45,6 +45,14 @@ export const Level = (function implementer() {
                         } else if (object.properties[0].value === 'barbs') {
                             const enemyBarbs = barbs.create(k);
                             stage.add(enemyBarbs.make(object.x, object.y));
+                        } else if (
+                            object.properties[1].value === 'scabFloor' ||
+                            object.properties[1].value === 'scabWall'
+                        ) {
+                            const flip = object.properties[0].value;
+                            const type = object.properties[1].value;
+                            const enemyScab = scab.create(k);
+                            stage.add(enemyScab.make(object.x, object.y, type, flip));
                         }
                     }
                 }

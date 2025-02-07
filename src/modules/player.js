@@ -164,7 +164,7 @@ export const Player = (function implementer() {
         ]);
 
         hit.onCollide((other) => {
-            if (other.is('barbs')) {
+            if (other.is('barbs') || other.is('scab')) {
                 const info = k.add([k.sprite('dialogueNot'), k.pos(player.pos.x, player.pos.y - 30)]);
                 k.wait(0.2, () => info.destroy());
             }
@@ -179,7 +179,7 @@ export const Player = (function implementer() {
         return {
             assumeAttack(k, screen, settings) {
                 this.onCollide((other) => {
-                    if (other.is('gangster') || other.is('barbs')) {
+                    if (other.is('gangster') || other.is('barbs') || other.is('scab') || other.is('mucus')) {
                         this.hurt(parameters.damage);
                         this.decreaseLife();
                         this.jump(200);
