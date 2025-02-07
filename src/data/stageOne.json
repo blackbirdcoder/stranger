@@ -637,6 +637,28 @@
                  "width":22.9986111111111,
                  "x":1765.00138888889,
                  "y":415.991666666667
+                }, 
+                {
+                 "height":31.9996,
+                 "id":86,
+                 "name":"barrierForEnemy",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":31.9918,
+                 "x":1600.0666,
+                 "y":575.9377
+                }, 
+                {
+                 "height":31.9996,
+                 "id":87,
+                 "name":"barrierForEnemy",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":31.9918,
+                 "x":1728.01538472222,
+                 "y":575.995686111111
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -948,6 +970,96 @@
                  "width":0,
                  "x":1728.00390625,
                  "y":447.991666666667
+                }, 
+                {
+                 "height":0,
+                 "id":83,
+                 "name":"enemy",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"type",
+                         "type":"string",
+                         "value":"barbs"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1728.00277777778,
+                 "y":768.007899305556
+                }, 
+                {
+                 "height":0,
+                 "id":84,
+                 "name":"enemy",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"type",
+                         "type":"string",
+                         "value":"barbs"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1760.00492527174,
+                 "y":896.00050951087
+                }, 
+                {
+                 "height":0,
+                 "id":85,
+                 "name":"enemy",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"type",
+                         "type":"string",
+                         "value":"barbs"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1792.00606060606,
+                 "y":896
+                }, 
+                {
+                 "height":0,
+                 "id":88,
+                 "name":"enemy",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"type",
+                         "type":"string",
+                         "value":"gangster"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1664.00055857488,
+                 "y":575.991243961353
+                }, 
+                {
+                 "height":0,
+                 "id":89,
+                 "name":"enemy",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"type",
+                         "type":"string",
+                         "value":"gangster"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1472.00164930556,
+                 "y":895.999392361111
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -956,7 +1068,7 @@
          "y":0
         }],
  "nextlayerid":7,
- "nextobjectid":83,
+ "nextobjectid":90,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.1-99-gec89c545",

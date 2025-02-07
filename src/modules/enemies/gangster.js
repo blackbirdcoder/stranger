@@ -16,6 +16,7 @@ export const Gangster = (function implementer() {
                     k.body({ isStatic: true }),
                     k.pos(posX, posY),
                     k.health(parameters.health),
+                    k.offscreen({ hide: true }),
                     'gangster',
                     _wrapWander(),
                     _wrapDirSwitchingTracking(),
