@@ -3,7 +3,6 @@ import kaplay from 'kaplay';
 import { zzfx } from '/src/libs/zzfx.micro.js';
 import { Settings } from '/src/modules/settings.js';
 import { Loader } from '/src/modules/loader.js';
-import { layers as layerDataStageZero } from '/src/data/stageZero.json' assert { type: 'JSON' };
 import { layers as layerDataStageOne } from '/src/data/stageOne.json' assert { type: 'JSON' };
 import { Player } from '/src/modules/player.js';
 import { Platform } from '/src/modules/platform.js';
