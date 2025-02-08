@@ -1,5 +1,5 @@
 export const Level = (function implementer() {
-    function buildLocation(k, levelSpriteName, layersLevel, player, platform, gangster, barbs, scab) {
+    function buildLocation(k, levelSpriteName, layersLevel, player, platform, gangster, barbs, scab, loot) {
         // TODO: Implement levels
         const stage = k.add([k.sprite(levelSpriteName), k.pos(0, 0)]);
         console.log(layersLevel);
@@ -53,6 +53,16 @@ export const Level = (function implementer() {
                             const type = object.properties[1].value;
                             const enemyScab = scab.create(k);
                             stage.add(enemyScab.make(object.x, object.y, type, flip));
+                        }
+                    } else if (object.name === 'loot') {
+                        if (
+                            object.properties[0].value === 'cat' ||
+                            object.properties[0].value === 'bird' ||
+                            object.properties[0].value === 'battery'
+                        ) {
+                            const bonus = loot.create(k);
+                            const anim = object.properties[0].value === 'battery' ? {} : { anim: 'idle' };
+                            stage.add(bonus.make(object.x, object.y, object.properties[0].value, anim));
                         }
                     }
                 }

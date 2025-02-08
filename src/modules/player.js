@@ -27,6 +27,7 @@ export const Player = (function implementer() {
             _wrapMoney(),
             _wrapAssumeAttack(),
             _wrapRestart(),
+            _wrapCollectLoot(k),
         ]);
     }
 
@@ -110,6 +111,10 @@ export const Player = (function implementer() {
             getLife() {
                 return achievements.life.current;
             },
+
+            getMaxLife() {
+                return achievements.life.max;
+            },
         };
     }
 
@@ -125,7 +130,7 @@ export const Player = (function implementer() {
                 return achievements.battery.current;
             },
             checkBattery() {
-                return achievements.battery.current === achievements.battery.max ? true : false;
+                return achievements.battery.current === achievements.battery.max - 1 ? true : false;
             },
         };
     }
@@ -214,12 +219,57 @@ export const Player = (function implementer() {
         };
     }
 
+    function _wrapCollectLoot(k) {
+        return {
+            collectLoot() {
+                this.onCollide((other) => {
+                    if (other.is('cat')) {
+                        other.destroy();
+                        k.wait(0.6, () => this.addCat());
+                        _lootFx(k, 'iconCat');
+                    } else if (other.is('bird')) {
+                        if (this.getLife() < this.getMaxLife()) {
+                            other.destroy();
+                            k.wait(0.2, () => this.addLife());
+                            _lootFx(k, 'iconHeart');
+                        } else {
+                            const info = k.add([k.sprite('dialogueNot'), k.pos(this.pos.x, this.pos.y - 30)]);
+                            k.wait(0.2, () => info.destroy());
+                        }
+                    } else if (other.is('battery')) {
+                        other.destroy();
+                        k.wait(0.2, () => this.addBattery());
+                        _lootFx(k, 'iconBattery');
+
+                        if (this.checkBattery()) {
+                            const info = k.add([k.sprite('dialogueShip'), k.pos(this.pos.x, this.pos.y - 30)]);
+                            k.wait(0.5, () => info.destroy());
+                            
+                            console.log(this.checkBattery(), achievements.battery.current);
+                        }
+                    }
+                });
+            },
+        };
+    }
+
     function _wrapRestart() {
         return {
             restart() {
                 achievements = _achievementsInit();
             },
         };
+    }
+
+    function _lootFx(k, spriteName) {
+        k.add([
+            k.pos(player.pos.x + k.randi(5, 10), player.pos.y),
+            k.sprite(spriteName),
+            k.scale(0.5),
+            k.opacity(0.5),
+            k.lifespan(0.3, { fade: 0.2 }),
+            k.move(k.UP, k.randi(50, 75)),
+        ]);
     }
 
     function _achievementsInit() {

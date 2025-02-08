@@ -14,8 +14,9 @@ import { Screen } from '/src/modules/screen.js';
 import { Gangster } from '/src/modules/enemies/gangster.js';
 import { Barbs } from '/src/modules/enemies/barbs.js';
 import { Scab } from '/src/modules/enemies/scab.js';
+import { Loot } from '/src/modules/loot.js';
 
-(function main(settings, loader, player, platform, level, dashboard, camera, screen, gangster, barbs, scab) {
+(function main(settings, loader, player, platform, level, dashboard, camera, screen, gangster, barbs, scab, loot) {
     const k = kaplay({
         width: settings.scene.width,
         height: settings.scene.height,
@@ -40,7 +41,7 @@ import { Scab } from '/src/modules/enemies/scab.js';
         });
 
         k.onKeyPress('enter', () => {
-            k.go('gameStageOne', settings, player, platform, level, dashboard, camera, gangster, barbs, scab);
+            k.go('gameStageOne', settings, player, platform, level, dashboard, camera, gangster, barbs, scab, loot);
         });
     });
 
@@ -48,10 +49,21 @@ import { Scab } from '/src/modules/enemies/scab.js';
         k.add([k.text('Game Over'), k.pos(10, 10)]);
     });
 
-    k.scene('gameStageOne', (settings, player, platform, level, dashboard, camera, gangster, barbs, scab) => {
-        const stage = level.buildLocation(k, 'stageOne', layerDataStageOne, player, platform, gangster, barbs, scab);
+    k.scene('gameStageOne', (settings, player, platform, level, dashboard, camera, gangster, barbs, scab, loot) => {
+        const stage = level.buildLocation(
+            k,
+            'stageOne',
+            layerDataStageOne,
+            player,
+            platform,
+            gangster,
+            barbs,
+            scab,
+            loot
+        );
         const hero = player.get();
         hero.assumeAttack(k, screen, settings);
+        hero.collectLoot();
         const flyPlatforms = [...stage.get('vertical'), ...stage.get('horizontal')];
         flyPlatforms[0].setSpeed(36);
         flyPlatforms[1].setSpeed(30);
@@ -86,10 +98,10 @@ import { Scab } from '/src/modules/enemies/scab.js';
 
         k.onKeyPress('r', () => {
             hero.restart();
-            k.go('gameStageOne', settings, player, platform, level, dashboard, camera, gangster, barbs, scab);
+            k.go('gameStageOne', settings, player, platform, level, dashboard, camera, gangster, barbs, scab, loot);
         });
     });
 
     k.go('start', screen, settings);
     //k.go('gameStageOne', settings, player, platform, level, dashboard, camera);
-})(Settings, Loader, Player, Platform, Level, Dashboard, Camera, Screen, Gangster, Barbs, Scab);
+})(Settings, Loader, Player, Platform, Level, Dashboard, Camera, Screen, Gangster, Barbs, Scab, Loot);
