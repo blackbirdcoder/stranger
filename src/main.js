@@ -81,6 +81,11 @@ import { Loot } from '/src/modules/loot.js';
             camera.start(k, hero.worldPos());
         });
 
+        k.onCollide('result', 'player', () => {
+            console.log('Battery: ', hero.getBattery());
+            // Battery == 10 next scene you win
+        });
+
         k.onDraw(() => {
             dashboard.created(
                 k,

@@ -659,6 +659,17 @@
                  "width":31.9918,
                  "x":1728.01538472222,
                  "y":575.995686111111
+                }, 
+                {
+                 "height":31.969696969697,
+                 "id":110,
+                 "name":"result",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":32.0606060606061,
+                 "x":159.969696969697,
+                 "y":896.030303030303
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -1189,7 +1200,7 @@
                 }, 
                 {
                  "height":0,
-                 "id":100,
+                 "id":111,
                  "name":"loot",
                  "point":true,
                  "properties":[
@@ -1202,12 +1213,12 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":448.002604166667,
-                 "y":896.001302083333
+                 "x":1600.00177556818,
+                 "y":447.998934659091
                 }, 
                 {
                  "height":0,
-                 "id":101,
+                 "id":112,
                  "name":"loot",
                  "point":true,
                  "properties":[
@@ -1220,12 +1231,12 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":479.5,
-                 "y":895.5
+                 "x":1856,
+                 "y":447.979166666667
                 }, 
                 {
                  "height":0,
-                 "id":102,
+                 "id":113,
                  "name":"loot",
                  "point":true,
                  "properties":[
@@ -1238,134 +1249,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":512,
-                 "y":895.5
-                }, 
-                {
-                 "height":0,
-                 "id":103,
-                 "name":"loot",
-                 "point":true,
-                 "properties":[
-                        {
-                         "name":"type",
-                         "type":"string",
-                         "value":"battery"
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":544.503,
-                 "y":896.001
-                }, 
-                {
-                 "height":0,
-                 "id":104,
-                 "name":"loot",
-                 "point":true,
-                 "properties":[
-                        {
-                         "name":"type",
-                         "type":"string",
-                         "value":"battery"
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":576,
-                 "y":895.5
-                }, 
-                {
-                 "height":0,
-                 "id":105,
-                 "name":"loot",
-                 "point":true,
-                 "properties":[
-                        {
-                         "name":"type",
-                         "type":"string",
-                         "value":"battery"
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":608.5,
-                 "y":895.5
-                }, 
-                {
-                 "height":0,
-                 "id":106,
-                 "name":"loot",
-                 "point":true,
-                 "properties":[
-                        {
-                         "name":"type",
-                         "type":"string",
-                         "value":"battery"
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":640.184818181818,
-                 "y":896.001
-                }, 
-                {
-                 "height":0,
-                 "id":107,
-                 "name":"loot",
-                 "point":true,
-                 "properties":[
-                        {
-                         "name":"type",
-                         "type":"string",
-                         "value":"battery"
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":671.681818181818,
-                 "y":895.5
-                }, 
-                {
-                 "height":0,
-                 "id":108,
-                 "name":"loot",
-                 "point":true,
-                 "properties":[
-                        {
-                         "name":"type",
-                         "type":"string",
-                         "value":"battery"
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":704.181818181818,
-                 "y":895.5
-                }, 
-                {
-                 "height":0,
-                 "id":109,
-                 "name":"loot",
-                 "point":true,
-                 "properties":[
-                        {
-                         "name":"type",
-                         "type":"string",
-                         "value":"battery"
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":736.083333333333,
-                 "y":895.916666666667
+                 "x":896.00615530303,
+                 "y":704.001893939394
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -1374,7 +1259,7 @@
          "y":0
         }],
  "nextlayerid":7,
- "nextobjectid":110,
+ "nextobjectid":114,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.1-99-gec89c545",

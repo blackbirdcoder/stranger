@@ -15,6 +15,12 @@ export const Level = (function implementer() {
                             k.body({ isStatic: true }),
                             k.pos(object.x, object.y),
                         ]);
+                    } else if (object.name === 'result') {
+                        stage.add([
+                            k.area({ shape: new Rect(k.vec2(0), object.width, object.height) }),
+                            k.pos(object.x, object.y),
+                            'result',
+                        ]);
                     } else {
                         stage.add([
                             k.area({ shape: new Rect(k.vec2(0), object.width, object.height) }),
