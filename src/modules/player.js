@@ -44,12 +44,16 @@ export const Player = (function implementer() {
 
     function launchMovement(k) {
         if (_checkExistence()) {
+            const moveLimit = {
+                right: 2010,
+                left: 16,
+            };
             player.play('idle');
 
             player.onKeyDown(['right', 'left', 'up'], (key) => {
-                if (key === 'right') {
+                if (key === 'right' && player.pos.x < moveLimit.right) {
                     if (player.curAnim() !== 'attack') player.move(parameters.speed, 0);
-                } else if (key === 'left') {
+                } else if (key === 'left' && player.pos.x > moveLimit.left) {
                     if (player.curAnim() !== 'attack') player.move(-parameters.speed, 0);
                 } else if (key === 'up') {
                     if (player.isGrounded()) player.jump(parameters.jump);
@@ -244,7 +248,7 @@ export const Player = (function implementer() {
                         if (this.checkBattery()) {
                             const info = k.add([k.sprite('dialogueShip'), k.pos(this.pos.x, this.pos.y - 30)]);
                             k.wait(0.5, () => info.destroy());
-                            
+
                             console.log(this.checkBattery(), achievements.battery.current);
                         }
                     }
