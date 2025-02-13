@@ -1,5 +1,5 @@
 export const Level = (function implementer() {
-    function buildLocation(k, levelSpriteName, layersLevel, player, platform, gangster, barbs, scab, loot) {
+    function buildLocation(k, levelSpriteName, layersLevel, player, platform, gangster, barbs, scab, loot, snow) {
         // TODO: Implement levels
         const stage = k.add([k.sprite(levelSpriteName), k.pos(0, 0)]);
         console.log(layersLevel);
@@ -70,6 +70,8 @@ export const Level = (function implementer() {
                             const anim = object.properties[0].value === 'battery' ? {} : { anim: 'idle' };
                             stage.add(bonus.make(object.x, object.y, object.properties[0].value, anim));
                         }
+                    } else if (object.name === 'snow') {
+                        snow.create(k, object.x, 532, 0.5, [30, 80]);
                     }
                 }
             }

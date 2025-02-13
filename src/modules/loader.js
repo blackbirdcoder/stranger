@@ -31,6 +31,7 @@ export const Loader = (function implementer() {
         'hitFx',
         'hitStar',
         'circle',
+        'snow',
     ];
 
     const fontName = 'SilkscreenRegular';

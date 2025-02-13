@@ -14,8 +14,23 @@ import { Gangster } from '/src/modules/enemies/gangster.js';
 import { Barbs } from '/src/modules/enemies/barbs.js';
 import { Scab } from '/src/modules/enemies/scab.js';
 import { Loot } from '/src/modules/loot.js';
+import { Snow } from '/src/modules/snow.js';
 
-(function main(settings, loader, player, platform, level, dashboard, camera, screen, gangster, barbs, scab, loot) {
+(function main(
+    settings,
+    loader,
+    player,
+    platform,
+    level,
+    dashboard,
+    camera,
+    screen,
+    gangster,
+    barbs,
+    scab,
+    loot,
+    snow
+) {
     const k = kaplay({
         width: settings.scene.width,
         height: settings.scene.height,
@@ -40,7 +55,20 @@ import { Loot } from '/src/modules/loot.js';
         });
 
         k.onKeyPress('enter', () => {
-            k.go('gameStageOne', settings, player, platform, level, dashboard, camera, gangster, barbs, scab, loot);
+            k.go(
+                'gameStageOne',
+                settings,
+                player,
+                platform,
+                level,
+                dashboard,
+                camera,
+                gangster,
+                barbs,
+                scab,
+                loot,
+                snow
+            );
         });
     });
 
@@ -48,64 +76,81 @@ import { Loot } from '/src/modules/loot.js';
         k.add([k.text('Game Over'), k.pos(10, 10)]);
     });
 
-    k.scene('gameStageOne', (settings, player, platform, level, dashboard, camera, gangster, barbs, scab, loot) => {
-        const stage = level.buildLocation(
-            k,
-            'stageOne',
-            layerDataStageOne,
-            player,
-            platform,
-            gangster,
-            barbs,
-            scab,
-            loot
-        );
-        const hero = player.get();
-        hero.assumeAttack(k, screen, settings);
-        hero.collectLoot();
-        const flyPlatforms = [...stage.get('vertical'), ...stage.get('horizontal')];
-        flyPlatforms[0].setSpeed(36);
-        flyPlatforms[1].setSpeed(30);
-        const enemyGangsters = stage.get('gangster');
-        enemyGangsters.forEach((gangster) => {
-            gangster.dirSwitchingTracking();
-            gangster.assumeAttack(hero, settings.colors.get('swatch16'));
-        });
-        const enemyScab = stage.get('scab');
-        enemyScab.forEach((scab) => scab.erupt());
-
-        k.onUpdate(() => {
-            flyPlatforms.forEach((flyPlatform) => flyPlatform.navigate());
-            enemyGangsters.forEach((gangster) => gangster.wander());
-            camera.start(k, hero.worldPos());
-        });
-
-        k.onCollide('result', 'player', () => {
-            console.log('Battery: ', hero.getBattery());
-            // Battery == 10 next scene you win
-        });
-
-        k.onDraw(() => {
-            dashboard.created(
+    k.scene(
+        'gameStageOne',
+        (settings, player, platform, level, dashboard, camera, gangster, barbs, scab, loot, snow) => {
+            const stage = level.buildLocation(
                 k,
-                settings.scene.width,
-                settings.colors.get('swatch20'),
-                settings.colors.get('swatch16'),
-                k.getCamPos(),
-                hero.getLife(),
-                hero.getBattery(),
-                hero.getMaxBattery(),
-                hero.getCat(),
-                hero.getMoney()
+                'stageOne',
+                layerDataStageOne,
+                player,
+                platform,
+                gangster,
+                barbs,
+                scab,
+                loot,
+                snow
             );
-        });
+            const hero = player.get();
+            hero.assumeAttack(k, screen, settings);
+            hero.collectLoot();
+            const flyPlatforms = [...stage.get('vertical'), ...stage.get('horizontal')];
+            flyPlatforms[0].setSpeed(36);
+            flyPlatforms[1].setSpeed(30);
+            const enemyGangsters = stage.get('gangster');
+            enemyGangsters.forEach((gangster) => {
+                gangster.dirSwitchingTracking();
+                gangster.assumeAttack(hero, settings.colors.get('swatch16'));
+            });
+            const enemyScab = stage.get('scab');
+            enemyScab.forEach((scab) => scab.erupt());
 
-        k.onKeyPress('r', () => {
-            hero.restart();
-            k.go('gameStageOne', settings, player, platform, level, dashboard, camera, gangster, barbs, scab, loot);
-        });
-    });
+            k.onUpdate(() => {
+                flyPlatforms.forEach((flyPlatform) => flyPlatform.navigate());
+                enemyGangsters.forEach((gangster) => gangster.wander());
+                camera.start(k, hero.worldPos());
+            });
+
+            k.onCollide('result', 'player', () => {
+                console.log('Battery: ', hero.getBattery());
+                // Battery == 10 next scene you win
+            });
+
+            k.onDraw(() => {
+                dashboard.created(
+                    k,
+                    settings.scene.width,
+                    settings.colors.get('swatch20'),
+                    settings.colors.get('swatch16'),
+                    k.getCamPos(),
+                    hero.getLife(),
+                    hero.getBattery(),
+                    hero.getMaxBattery(),
+                    hero.getCat(),
+                    hero.getMoney()
+                );
+            });
+
+            k.onKeyPress('r', () => {
+                hero.restart();
+                k.go(
+                    'gameStageOne',
+                    settings,
+                    player,
+                    platform,
+                    level,
+                    dashboard,
+                    camera,
+                    gangster,
+                    barbs,
+                    scab,
+                    loot,
+                    snow
+                );
+            });
+        }
+    );
 
     k.go('start', screen, settings);
     //k.go('gameStageOne', settings, player, platform, level, dashboard, camera);
-})(Settings, Loader, Player, Platform, Level, Dashboard, Camera, Screen, Gangster, Barbs, Scab, Loot);
+})(Settings, Loader, Player, Platform, Level, Dashboard, Camera, Screen, Gangster, Barbs, Scab, Loot, Snow);
