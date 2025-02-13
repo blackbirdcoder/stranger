@@ -1,5 +1,7 @@
 export const Player = (function implementer() {
     let player = null;
+    let soundPlayer = null;
+
     const parameters = Object.freeze({
         speed: 170,
         jump: 435,
@@ -7,6 +9,15 @@ export const Player = (function implementer() {
         mass: 100,
         maxVelocity: 500,
         damage: 1,
+    });
+
+    const soundEffects = Object.freeze({
+        hit: [, 0, 423, 0.1, 0.02, 0.23, 1, 1.9, 4.4, , , , , 0.9, , , , 0.98],
+        jump: [, , 359, 0.03, 0.04, 0.09, , 3.5, , 61, , , , 0.2, , , , 0.88, 0.1],
+        takeDamage: [1.2, 0, 29, , 0.13, 0.009, 1, 3.9, 68, , , , 0.02, 0.1, , , , 0.52, , 0.05, -1370],
+        takeCat: [, , 558, 0.02, 0.07, 0.16, , 2.5, 5, , 364, 0.1, , , , 0.1, , 0.58, 0.02],
+        takeBird: [, 0, 356, 0.1, 0.12, 0.4, , 3.4, 21, , 137, 0.05, 0.01, 0.2, , , , 0.97, , 0.02],
+        takeBattery: [0.8, , 325, 0.02, 0.19, 0.43, , 3.3, , , 220, 0.07, 0.06, , , , , 0.94, 0.17, 0.49, -1332],
     });
 
     let achievements = _achievementsInit();
@@ -38,6 +49,10 @@ export const Player = (function implementer() {
         }
     }
 
+    function setSoundPlayer(sfxPlayer) {
+        soundPlayer ??= sfxPlayer;
+    }
+
     function get() {
         return _checkExistence() ? player : null;
     }
@@ -56,7 +71,10 @@ export const Player = (function implementer() {
                 } else if (key === 'left' && player.pos.x > moveLimit.left) {
                     if (player.curAnim() !== 'attack') player.move(-parameters.speed, 0);
                 } else if (key === 'up') {
-                    if (player.isGrounded()) player.jump(parameters.jump);
+                    if (player.isGrounded()) {
+                        soundPlayer(...soundEffects.jump);
+                        player.jump(parameters.jump);
+                    }
                 }
             });
 
@@ -172,6 +190,8 @@ export const Player = (function implementer() {
             'hitFx',
         ]);
 
+        soundPlayer(...soundEffects.hit);
+
         hit.onCollide((other) => {
             if (other.is('barbs') || other.is('scab')) {
                 const info = k.add([k.sprite('dialogueNot'), k.pos(player.pos.x, player.pos.y - 30)]);
@@ -189,6 +209,7 @@ export const Player = (function implementer() {
             assumeAttack(k, screen, settings) {
                 this.onCollide((other) => {
                     if (other.is('gangster') || other.is('barbs') || other.is('scab') || other.is('mucus')) {
+                        soundPlayer(...soundEffects.takeDamage);
                         this.hurt(parameters.damage);
                         this.decreaseLife();
                         this.jump(200);
@@ -228,11 +249,13 @@ export const Player = (function implementer() {
             collectLoot() {
                 this.onCollide((other) => {
                     if (other.is('cat')) {
+                        soundPlayer(...soundEffects.takeCat);
                         other.destroy();
                         k.wait(0.6, () => this.addCat());
                         _lootFx(k, 'iconCat');
                     } else if (other.is('bird')) {
                         if (this.getLife() < this.getMaxLife()) {
+                            soundPlayer(...soundEffects.takeBird);
                             other.destroy();
                             k.wait(0.2, () => this.addLife());
                             _lootFx(k, 'iconHeart');
@@ -241,6 +264,7 @@ export const Player = (function implementer() {
                             k.wait(0.2, () => info.destroy());
                         }
                     } else if (other.is('battery')) {
+                        soundPlayer(...soundEffects.takeBattery);
                         other.destroy();
                         k.wait(0.2, () => this.addBattery());
                         _lootFx(k, 'iconBattery');
@@ -302,5 +326,6 @@ export const Player = (function implementer() {
         setPosition: setPosition,
         get: get,
         launchMovement: launchMovement,
+        setSoundPlayer: setSoundPlayer,
     });
 })();

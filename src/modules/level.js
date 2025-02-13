@@ -1,5 +1,17 @@
 export const Level = (function implementer() {
-    function buildLocation(k, levelSpriteName, layersLevel, player, platform, gangster, barbs, scab, loot, snow) {
+    function buildLocation(
+        k,
+        levelSpriteName,
+        layersLevel,
+        player,
+        platform,
+        gangster,
+        barbs,
+        scab,
+        loot,
+        snow,
+        sfxPlayer
+    ) {
         // TODO: Implement levels
         const stage = k.add([k.sprite(levelSpriteName), k.pos(0, 0)]);
         console.log(layersLevel);
@@ -36,6 +48,7 @@ export const Level = (function implementer() {
                         player.make(k);
                         player.setPosition(object.x, object.y);
                         player.launchMovement(k);
+                        player.setSoundPlayer(sfxPlayer);
                         stage.add(player.get());
                     } else if (object.name === 'light') {
                         stage.add([k.sprite('light'), k.pos(object.x, object.y), k.opacity(0.8), k.z(10)]);

@@ -29,7 +29,8 @@ import { Snow } from '/src/modules/snow.js';
     barbs,
     scab,
     loot,
-    snow
+    snow,
+    sfxPlayer
 ) {
     const k = kaplay({
         width: settings.scene.width,
@@ -67,7 +68,8 @@ import { Snow } from '/src/modules/snow.js';
                 barbs,
                 scab,
                 loot,
-                snow
+                snow,
+                sfxPlayer
             );
         });
     });
@@ -78,7 +80,7 @@ import { Snow } from '/src/modules/snow.js';
 
     k.scene(
         'gameStageOne',
-        (settings, player, platform, level, dashboard, camera, gangster, barbs, scab, loot, snow) => {
+        (settings, player, platform, level, dashboard, camera, gangster, barbs, scab, loot, snow, sfxPlayer) => {
             const stage = level.buildLocation(
                 k,
                 'stageOne',
@@ -89,7 +91,8 @@ import { Snow } from '/src/modules/snow.js';
                 barbs,
                 scab,
                 loot,
-                snow
+                snow,
+                sfxPlayer
             );
             const hero = player.get();
             hero.assumeAttack(k, screen, settings);
@@ -145,7 +148,8 @@ import { Snow } from '/src/modules/snow.js';
                     barbs,
                     scab,
                     loot,
-                    snow
+                    snow,
+                    sfxPlayer
                 );
             });
         }
@@ -153,4 +157,4 @@ import { Snow } from '/src/modules/snow.js';
 
     k.go('start', screen, settings);
     //k.go('gameStageOne', settings, player, platform, level, dashboard, camera);
-})(Settings, Loader, Player, Platform, Level, Dashboard, Camera, Screen, Gangster, Barbs, Scab, Loot, Snow);
+})(Settings, Loader, Player, Platform, Level, Dashboard, Camera, Screen, Gangster, Barbs, Scab, Loot, Snow, zzfx);
