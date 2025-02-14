@@ -150,6 +150,7 @@ export const Loader = (function implementer() {
         }
 
         k.loadFont(`${fontName}`, `font/${fontName}.woff2`);
+        k.loadMusic("bg", "/music/bg.mp3");
     }
 
     return {

@@ -81,6 +81,7 @@ import { Snow } from '/src/modules/snow.js';
     k.scene(
         'gameStageOne',
         (settings, player, platform, level, dashboard, camera, gangster, barbs, scab, loot, snow, sfxPlayer) => {
+            const bgMusic = k.play('bg', { loop: true });
             const stage = level.buildLocation(
                 k,
                 'stageOne',
