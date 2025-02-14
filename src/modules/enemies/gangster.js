@@ -4,6 +4,12 @@ export const Gangster = (function implementer() {
         damage: 1,
         speed: 50,
     };
+    let soundPlayer = null;
+
+    const soundEffects = {
+        takeDamage: [0.6, , 67, 0.02, 0.13, , 2, 2, -5, -19, , , , , , , , 0.93, 0.13, , -780],
+        money: [4.5, 0, 116, , 0.06, 0.35, , 1.4, , , 370, 0.08, , , , , 0.02, 0.85, 0.3, 0.16, 802],
+    };
 
     function create(k) {
         const spriteNames = ['gangster1', 'gangster2'];
@@ -24,6 +30,10 @@ export const Gangster = (function implementer() {
                 ]);
             },
         };
+    }
+
+    function setSoundPlayer(sfxPlayer) {
+        soundPlayer ??= sfxPlayer;
     }
 
     function _wrapWander() {
@@ -52,6 +62,7 @@ export const Gangster = (function implementer() {
             assumeAttack(hero, accentColor) {
                 this.onCollide((other) => {
                     if (other.is('hitFx')) {
+                        soundPlayer(...soundEffects.takeDamage);
                         this.hurt(parameters.damage);
                         if (this.hp() === 0) {
                             this.play('died');
@@ -72,7 +83,10 @@ export const Gangster = (function implementer() {
                                 k.lifespan(0.3, { fade: 0.2 }),
                                 k.move(k.UP, k.randi(50, 75)),
                             ]);
-                            k.wait(0.6, () => hero.setMoney(randomMoney));
+                            k.wait(0.6, () => {
+                                hero.setMoney(randomMoney);
+                                soundPlayer(...soundEffects.money);
+                            });
                         } else {
                             this.pos.x += 8;
                             const direction = [k.vec2(-1, -1), k.UP, k.vec2(1, -1)];
@@ -95,5 +109,6 @@ export const Gangster = (function implementer() {
 
     return {
         create: create,
+        setSoundPlayer: setSoundPlayer,
     };
 })();

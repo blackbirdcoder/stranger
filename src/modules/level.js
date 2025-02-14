@@ -61,6 +61,7 @@ export const Level = (function implementer() {
                         if (object.properties[0].value === 'gangster') {
                             const enemyGangster = gangster.create(k);
                             stage.add(enemyGangster.make(object.x, object.y));
+                            gangster.setSoundPlayer(sfxPlayer);
                         } else if (object.properties[0].value === 'barbs') {
                             const enemyBarbs = barbs.create(k);
                             stage.add(enemyBarbs.make(object.x, object.y));
