@@ -206,7 +206,7 @@ export const Player = (function implementer() {
 
     function _wrapAssumeAttack() {
         return {
-            assumeAttack(k, screen, settings) {
+            assumeAttack(k, screen, settings, hero, music) {
                 this.onCollide((other) => {
                     if (other.is('gangster') || other.is('barbs') || other.is('scab') || other.is('mucus')) {
                         soundPlayer(...soundEffects.takeDamage);
@@ -234,8 +234,9 @@ export const Player = (function implementer() {
 
                         if (!this.checkLife()) {
                             k.wait(0.4, () => {
+                                music.stop();
                                 this.destroy();
-                                k.go('gameOver', screen, settings);
+                                k.go('gameOver', screen, settings, hero);
                             });
                         }
                     }

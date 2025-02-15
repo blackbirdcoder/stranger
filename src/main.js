@@ -74,8 +74,34 @@ import { Snow } from '/src/modules/snow.js';
         });
     });
 
-    k.scene('gameOver', (screen, settings) => {
-        k.add([k.text('Game Over'), k.pos(10, 10)]);
+    k.scene('gameOver', (screen, settings, hero) => {
+        k.wait(0.4, () => sfxPlayer(...settings.sound.loser));
+        const gameOverScreen = screen.gameOver(k);
+        const baseColor = settings.colors.get('swatch11');
+        const accentColor = settings.colors.get('swatch19');
+        gameOverScreen.text(baseColor, accentColor, k.width() / 2, 100, 'game over');
+        gameOverScreen.text(baseColor, accentColor, k.width() / 2, 400, 'to press key ', '<r>');
+        k.onDraw(() => {
+            gameOverScreen.bg();
+        });
+        k.onKeyPress('r', () => {
+            hero.restart();
+            k.go(
+                'gameStageOne',
+                settings,
+                player,
+                platform,
+                level,
+                dashboard,
+                camera,
+                gangster,
+                barbs,
+                scab,
+                loot,
+                snow,
+                sfxPlayer
+            );
+        });
     });
 
     k.scene(
@@ -96,7 +122,7 @@ import { Snow } from '/src/modules/snow.js';
                 sfxPlayer
             );
             const hero = player.get();
-            hero.assumeAttack(k, screen, settings);
+            hero.assumeAttack(k, screen, settings, hero, bgMusic);
             hero.collectLoot();
             const flyPlatforms = [...stage.get('vertical'), ...stage.get('horizontal')];
             flyPlatforms[0].setSpeed(36);
@@ -137,6 +163,7 @@ import { Snow } from '/src/modules/snow.js';
 
             k.onKeyPress('r', () => {
                 hero.restart();
+                bgMusic.stop();
                 k.go(
                     'gameStageOne',
                     settings,

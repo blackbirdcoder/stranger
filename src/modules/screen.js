@@ -47,7 +47,40 @@ export const Screen = (function implementer() {
         };
     }
 
+    function gameOver(k) {
+        return {
+            text: (textBaseColor, textAccentColor, posX, posY, baseText = null, accentText = null) => {
+                k.add([
+                    k.pos(posX, posY),
+                    k.text(`[base]${baseText ?? ' '}[/base][accent]${accentText ?? ' '}[/accent]`, {
+                        font: 'SilkscreenRegular',
+                        size: 27,
+                        styles: {
+                            base: {
+                                color: k.rgb(textBaseColor),
+                            },
+                            accent: {
+                                color: k.rgb(textAccentColor),
+                            },
+                        },
+                    }),
+                    k.anchor('top'),
+                    k.z(10),
+                ]);
+            },
+            bg: () => {
+                k.drawSprite({
+                    sprite: 'gameOver',
+                    pos: k.vec2(k.width() / 2 - 70, 180),
+                    width: 192,
+                    height: 128,
+                });
+            },
+        };
+    }
+
     return {
         start: start,
+        gameOver: gameOver,
     };
 })();
