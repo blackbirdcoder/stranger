@@ -39,6 +39,8 @@ export const Player = (function implementer() {
             _wrapAssumeAttack(),
             _wrapRestart(),
             _wrapCollectLoot(k),
+            _wrapNotBatteries(k),
+            _wrapScore(),
         ]);
     }
 
@@ -152,7 +154,7 @@ export const Player = (function implementer() {
                 return achievements.battery.current;
             },
             checkBattery() {
-                return achievements.battery.current === achievements.battery.max - 1 ? true : false;
+                return achievements.battery.current === achievements.battery.max ? true : false;
             },
         };
     }
@@ -267,17 +269,23 @@ export const Player = (function implementer() {
                     } else if (other.is('battery')) {
                         soundPlayer(...soundEffects.takeBattery);
                         other.destroy();
-                        k.wait(0.2, () => this.addBattery());
+                        this.addBattery();
                         _lootFx(k, 'iconBattery');
-
-                        if (this.checkBattery()) {
+                        if (this.getBattery() === this.getMaxBattery()) {
                             const info = k.add([k.sprite('dialogueShip'), k.pos(this.pos.x, this.pos.y - 30)]);
                             k.wait(0.5, () => info.destroy());
-
-                            console.log(this.checkBattery(), achievements.battery.current);
                         }
                     }
                 });
+            },
+        };
+    }
+
+    function _wrapNotBatteries(k) {
+        return {
+            notBatteries() {
+                const info = k.add([k.sprite('dialogueBattery'), k.pos(this.pos.x, this.pos.y - 30)]);
+                k.wait(0.5, () => info.destroy());
             },
         };
     }
@@ -286,6 +294,14 @@ export const Player = (function implementer() {
         return {
             restart() {
                 achievements = _achievementsInit();
+            },
+        };
+    }
+
+    function _wrapScore() {
+        return {
+            getScore() {
+                return (this.getMoney() + this.getBattery()) * (1 + this.getCat()) * this.getLife();
             },
         };
     }

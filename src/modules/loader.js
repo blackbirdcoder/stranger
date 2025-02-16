@@ -36,6 +36,8 @@ export const Loader = (function implementer() {
 
     const fontName = 'SilkscreenRegular';
 
+    const music = ['bg', 'winner'];
+
     function load(k) {
         for (let i = 0; i < spriteNames.length; i++) {
             if (spriteNames[i] === 'player') {
@@ -150,7 +152,11 @@ export const Loader = (function implementer() {
         }
 
         k.loadFont(`${fontName}`, `font/${fontName}.woff2`);
-        k.loadMusic("bg", "/music/bg.mp3");
+
+        for (const name of music) {
+            k.loadMusic(name, `/music/${name}.mp3`);
+        }
+        //k.loadMusic('winner', '/music/winner.mp3');
     }
 
     return {
