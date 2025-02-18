@@ -9,7 +9,7 @@ export const Screen = (function implementer() {
     }
 
     function printText(k, textBaseColor, textAccentColor, posX, posY, baseText = null, accentText = null) {
-        k.add([
+        return k.add([
             k.pos(posX, posY),
             k.text(`[base]${baseText ?? ' '}[/base][accent]${accentText ?? ' '}[/accent]`, {
                 font: textOptions.font,
@@ -71,10 +71,15 @@ export const Screen = (function implementer() {
         ]);
     }
 
+    function paintOver(k, color, x, y) {
+        return k.add([k.pos(x, y), k.rect(k.width(), k.height(), { fill: true }), k.color(color), k.z(9)]);
+    }
+
     return {
         drawImage: drawImage,
         printTextAnimation: printTextAnimation,
         printTextInstruction: printTextInstruction,
         printText: printText,
+        paintOver: paintOver,
     };
 })();

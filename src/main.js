@@ -15,6 +15,7 @@ import { Barbs } from '/src/modules/enemies/barbs.js';
 import { Scab } from '/src/modules/enemies/scab.js';
 import { Loot } from '/src/modules/loot.js';
 import { Snow } from '/src/modules/snow.js';
+import { Pause } from '/src/modules/pause.js';
 
 (function main(
     settings,
@@ -30,7 +31,8 @@ import { Snow } from '/src/modules/snow.js';
     scab,
     loot,
     snow,
-    sfxPlayer
+    sfxPlayer,
+    pause
 ) {
     const k = kaplay({
         width: settings.scene.width,
@@ -65,7 +67,9 @@ import { Snow } from '/src/modules/snow.js';
                 scab,
                 loot,
                 snow,
-                sfxPlayer
+                sfxPlayer,
+                screen,
+                pause
             );
         });
     });
@@ -93,7 +97,9 @@ import { Snow } from '/src/modules/snow.js';
                 scab,
                 loot,
                 snow,
-                sfxPlayer
+                sfxPlayer,
+                screen,
+                pause
             );
         });
     });
@@ -110,7 +116,25 @@ import { Snow } from '/src/modules/snow.js';
 
     k.scene(
         'gameStageOne',
-        (settings, player, platform, level, dashboard, camera, gangster, barbs, scab, loot, snow, sfxPlayer) => {
+        (
+            settings,
+            player,
+            platform,
+            level,
+            dashboard,
+            camera,
+            gangster,
+            barbs,
+            scab,
+            loot,
+            snow,
+            sfxPlayer,
+            screen,
+            pause
+        ) => {
+            const baseColor = settings.colors.get('swatch9');
+            const accentColor = settings.colors.get('swatch12');
+            const bgColor = settings.colors.get('swatch20');
             const bgMusic = k.play('bg', { loop: true });
             //bgMusic.stop(); // DELETE
             const stage = level.buildLocation(
@@ -141,8 +165,10 @@ import { Snow } from '/src/modules/snow.js';
             enemyScab.forEach((scab) => scab.erupt());
 
             k.onUpdate(() => {
-                flyPlatforms.forEach((flyPlatform) => flyPlatform.navigate());
-                enemyGangsters.forEach((gangster) => gangster.wander());
+                if (!pause.getState()) {
+                    flyPlatforms.forEach((flyPlatform) => flyPlatform.navigate());
+                    enemyGangsters.forEach((gangster) => gangster.wander());
+                }
                 camera.start(k, hero.worldPos());
             });
 
@@ -170,6 +196,13 @@ import { Snow } from '/src/modules/snow.js';
                 );
             });
 
+            k.onKeyPress('p', () => {
+                const { x, y } = k.getCamPos();
+                pause.toggle(k, screen.paintOver, bgColor, screen.printText, baseColor, accentColor, x, y, 'pause');
+                for (const child of stage.children) child.paused = pause.getState();
+                pause.getState() ? bgMusic.stop() : bgMusic.play();
+            });
+
             k.onKeyPress('r', () => {
                 hero.restart();
                 bgMusic.stop();
@@ -186,7 +219,9 @@ import { Snow } from '/src/modules/snow.js';
                     scab,
                     loot,
                     snow,
-                    sfxPlayer
+                    sfxPlayer,
+                    screen,
+                    pause
                 );
             });
         }
@@ -194,4 +229,20 @@ import { Snow } from '/src/modules/snow.js';
 
     k.go('start', screen, settings);
     //k.go('gameStageOne', settings, player, platform, level, dashboard, camera);
-})(Settings, Loader, Player, Platform, Level, Dashboard, Camera, Screen, Gangster, Barbs, Scab, Loot, Snow, zzfx);
+})(
+    Settings,
+    Loader,
+    Player,
+    Platform,
+    Level,
+    Dashboard,
+    Camera,
+    Screen,
+    Gangster,
+    Barbs,
+    Scab,
+    Loot,
+    Snow,
+    zzfx,
+    Pause
+);
