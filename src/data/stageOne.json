@@ -670,6 +670,17 @@
                  "width":32.0606060606061,
                  "x":159.969696969697,
                  "y":896.030303030303
+                }, 
+                {
+                 "height":32,
+                 "id":128,
+                 "name":"stageShift",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":64,
+                 "x":1983.99624231445,
+                 "y":895.991051136364
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -1367,7 +1378,7 @@
          "y":0
         }],
  "nextlayerid":7,
- "nextobjectid":128,
+ "nextobjectid":153,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.1-99-gec89c545",

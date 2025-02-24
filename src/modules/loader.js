@@ -7,7 +7,6 @@ export const Loader = (function implementer() {
         'cat',
         'cloud',
         'dialogueBattery',
-        'dialogueDanger',
         'dialogueNot',
         'dialogueShip',
         'gameOver',
@@ -32,6 +31,7 @@ export const Loader = (function implementer() {
         'hitStar',
         'circle',
         'snow',
+        'stageTwo',
     ];
 
     const fontName = 'SilkscreenRegular';
@@ -156,7 +156,6 @@ export const Loader = (function implementer() {
         for (const name of music) {
             k.loadMusic(name, `/music/${name}.mp3`);
         }
-        //k.loadMusic('winner', '/music/winner.mp3');
     }
 
     return {

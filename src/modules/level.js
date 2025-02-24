@@ -10,7 +10,9 @@ export const Level = (function implementer() {
         scab,
         loot,
         snow,
-        sfxPlayer
+        sfxPlayer,
+        playerPosX = undefined,
+        playerPosY = undefined
     ) {
         // TODO: Implement levels
         const stage = k.add([k.sprite(levelSpriteName), k.pos(0, 0)]);
@@ -33,6 +35,14 @@ export const Level = (function implementer() {
                             k.pos(object.x, object.y),
                             'result',
                         ]);
+                    } else if (object.name === 'stageShift') {
+                        stage.add([
+                            k.sprite('arrow'),
+                            k.area({ shape: new Rect(k.vec2(0), object.width, object.height) }),
+                            k.pos(object.x + 32, object.y + 16),
+                            k.anchor('center'),
+                            'stageShift',
+                        ]);
                     } else {
                         stage.add([
                             k.area({ shape: new Rect(k.vec2(0), object.width, object.height) }),
@@ -45,8 +55,12 @@ export const Level = (function implementer() {
             if (layer.name === 'Positions') {
                 for (const object of layer.objects) {
                     if (object.name === 'player') {
+                        if (!playerPosX && !playerPosY) {
+                            playerPosX = object.x;
+                            playerPosY = object.y;
+                        }
                         player.make(k);
-                        player.setPosition(object.x, object.y);
+                        player.setPosition(playerPosX, playerPosY);
                         player.launchMovement(k);
                         player.setSoundPlayer(sfxPlayer);
                         stage.add(player.get());
