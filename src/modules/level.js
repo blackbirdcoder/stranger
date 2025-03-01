@@ -1,4 +1,8 @@
 export const Level = (function implementer() {
+    const dataLoot = {
+        stuff: {},
+    };
+
     function buildLocation(
         k,
         levelSpriteName,
@@ -14,9 +18,8 @@ export const Level = (function implementer() {
         playerPosX = undefined,
         playerPosY = undefined
     ) {
-        // TODO: Implement levels
         const stage = k.add([k.sprite(levelSpriteName), k.pos(0, 0)]);
-        console.log(layersLevel);
+        //console.log(layersLevel);
         for (const layer of layersLevel) {
             if (layer.name === 'Colliders') {
                 for (const object of layer.objects) {
@@ -88,26 +91,63 @@ export const Level = (function implementer() {
                             const enemyScab = scab.create(k);
                             stage.add(enemyScab.make(object.x, object.y, type, flip));
                         }
-                    } else if (object.name === 'loot') {
-                        if (
-                            object.properties[0].value === 'cat' ||
-                            object.properties[0].value === 'bird' ||
-                            object.properties[0].value === 'battery'
-                        ) {
-                            const bonus = loot.create(k);
-                            const anim = object.properties[0].value === 'battery' ? {} : { anim: 'idle' };
-                            stage.add(bonus.make(object.x, object.y, object.properties[0].value, anim));
-                        }
                     } else if (object.name === 'snow') {
                         snow.create(k, object.x, 532, 0.5, [30, 80]);
                     }
                 }
             }
         }
+
+        for (const item of dataLoot.stuff[levelSpriteName]) {
+            if (item.enabled) {
+                const bonus = loot.create(k);
+                const anim = item.type === 'battery' ? {} : { anim: 'idle' };
+                stage.add(bonus.make(item.x, item.y, item.type, anim));
+            }
+        }
+
         return stage;
+    }
+
+    function parseLoot(layersLevel, levelSpriteName) {
+        const isName = 'is' + levelSpriteName[0].toUpperCase() + levelSpriteName.split(1).join('');
+        if (!dataLoot.stuff[isName]) {
+            dataLoot.stuff[levelSpriteName] = [];
+            for (const layer of layersLevel) {
+                if (layer.name === 'Positions') {
+                    for (const object of layer.objects) {
+                        if (object.name === 'loot') {
+                            dataLoot.stuff[levelSpriteName].push({
+                                type: object.properties[0].value,
+                                x: object.x,
+                                y: object.y,
+                                enabled: true,
+                            });
+                        }
+                        continue;
+                    }
+                }
+            }
+            dataLoot.stuff[isName] = true;
+        }
+    }
+
+    function disabledLoot(levelSpriteName, type, posX, posY) {
+        dataLoot.stuff[levelSpriteName].filter((item) => {
+            if (item.type === type && item.x === posX && item.y === posY && item.enabled) {
+                item.enabled = false;
+            }
+        });
+    }
+
+    function enabledLoot(levelSpriteName) {
+        dataLoot.stuff[levelSpriteName]?.filter((item) => (item.enabled = true));
     }
 
     return {
         buildLocation: buildLocation,
+        parseLoot: parseLoot,
+        disabledLoot: disabledLoot,
+        enabledLoot: enabledLoot,
     };
 })();

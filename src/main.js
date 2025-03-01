@@ -74,7 +74,7 @@ import { GameStageTwo } from '/src/modules/scenes/stageTwo.js';
     ];
 
     gameStart.init(k, screen, settings, 'gameStageOne');
-    gameOver.init(k, screen, settings, player, sfxPlayer, 'gameStageOne', generalSceneParameters);
+    gameOver.init(k, screen, settings, player, sfxPlayer, 'gameStageOne', level.enabledLoot, generalSceneParameters);
     gameWinner.init(k, screen, settings, player);
     gameStageOne.init(k, 'gameStageOne', layerDataStageOne, generalSceneParameters);
     gameStageTwo.init(k, 'gameStageTwo', layerDataStageTwo, generalSceneParameters);

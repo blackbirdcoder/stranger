@@ -249,16 +249,18 @@ export const Player = (function implementer() {
 
     function _wrapCollectLoot(k) {
         return {
-            collectLoot() {
+            collectLoot(levelSpriteName, cbDisabledLoot) {
                 this.onCollide((other) => {
                     if (other.is('cat')) {
                         soundPlayer(...soundEffects.takeCat);
+                        cbDisabledLoot(levelSpriteName, 'cat', other.pos.x, other.pos.y);
                         other.destroy();
                         k.wait(0.6, () => this.addCat());
                         _lootFx(k, 'iconCat');
                     } else if (other.is('bird')) {
                         if (this.getLife() < this.getMaxLife()) {
                             soundPlayer(...soundEffects.takeBird);
+                            cbDisabledLoot(levelSpriteName, 'bird', other.pos.x, other.pos.y);
                             other.destroy();
                             k.wait(0.2, () => this.addLife());
                             _lootFx(k, 'iconHeart');
@@ -268,6 +270,7 @@ export const Player = (function implementer() {
                         }
                     } else if (other.is('battery')) {
                         soundPlayer(...soundEffects.takeBattery);
+                        cbDisabledLoot(levelSpriteName, 'battery', other.pos.x, other.pos.y);
                         other.destroy();
                         this.addBattery();
                         _lootFx(k, 'iconBattery');

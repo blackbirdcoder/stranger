@@ -32,6 +32,9 @@ export const GameStageOne = (function implementer() {
 
             const bgMusic = k.play('bg', { loop: true });
             bgMusic.stop(); // DELETE
+
+            level.parseLoot(layerData, 'stageOne');
+
             const stage = level.buildLocation(
                 k,
                 'stageOne',
@@ -49,7 +52,7 @@ export const GameStageOne = (function implementer() {
             );
             const hero = player.get();
             hero.assumeAttack(k, screen, settings, hero, bgMusic);
-            hero.collectLoot();
+            hero.collectLoot('stageOne', level.disabledLoot);
             const flyPlatforms = [...stage.get('vertical'), ...stage.get('horizontal')];
             flyPlatforms[0].setSpeed(36);
             flyPlatforms[1].setSpeed(30);
@@ -116,6 +119,8 @@ export const GameStageOne = (function implementer() {
                         }
                     });
                 }
+                const stageNames = ['stageOne', 'stageTwo'];
+                stageNames.forEach((stageName) => level.enabledLoot(stageName));
                 hero.restart();
                 bgMusic.stop();
                 k.go(sceneName, ...parameters);
