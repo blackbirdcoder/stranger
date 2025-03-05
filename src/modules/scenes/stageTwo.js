@@ -41,21 +41,26 @@ export const GameStageTwo = (function implementer() {
             const hero = player.get();
             hero.assumeAttack(k, screen, settings, hero, bgMusic);
             hero.collectLoot('stageTwo', level.disabledLoot);
+            const flyPlatforms = [...stage.get('vertical')];
+            flyPlatforms[0].setSpeed(36);
+            flyPlatforms[1].setSpeed(36);
             const enemyGangsters = stage.get('gangster');
             enemyGangsters.forEach((gangster) => {
                 gangster.dirSwitchingTracking();
                 gangster.assumeAttack(hero, settings.colors.get('swatch16'));
             });
+            const enemyScab = stage.get('scab');
+            enemyScab.forEach((scab) => scab.erupt());
 
             k.onUpdate(() => {
                 if (!pause.getState()) {
+                    flyPlatforms.forEach((flyPlatform) => flyPlatform.navigate());
                     enemyGangsters.forEach((gangster) => gangster.wander());
                 }
                 camera.start(k, hero.worldPos());
             });
 
             k.onCollide('stageShift', 'player', () => {
-                // TODO: Continue. Switch isBack
                 parameters.push({ playerPos: { x: 1952, y: 896 } });
                 k.go('gameStageOne', ...parameters);
             });
