@@ -5,7 +5,6 @@ export const Loader = (function implementer() {
         'battery',
         'bird',
         'cat',
-        'cloud',
         'dialogueBattery',
         'dialogueNot',
         'dialogueShip',

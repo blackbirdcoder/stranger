@@ -17,8 +17,8 @@ export const GameStageTwo = (function implementer() {
             pause,
         ] = parameters;
 
-        // TODO: Continue. Development of the stage
         k.scene(sceneName, () => {
+            // TODO: Continue. Correct sound implementation
             const bgMusic = k.play('bg', { loop: true });
             bgMusic.stop(); // DELETE
 
