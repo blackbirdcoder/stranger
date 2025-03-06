@@ -31,10 +31,7 @@ export const GameStageOne = (function implementer() {
             }
 
             const bgMusic = k.play('bg', { loop: true });
-            bgMusic.stop(); // DELETE
-
             level.parseLoot(layerData, 'stageOne');
-
             const stage = level.buildLocation(
                 k,
                 'stageOne',
@@ -82,6 +79,7 @@ export const GameStageOne = (function implementer() {
             });
 
             k.onCollide('stageShift', 'player', () => {
+                bgMusic.stop();
                 k.go('gameStageTwo', ...parameters);
             });
 

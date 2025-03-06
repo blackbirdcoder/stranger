@@ -18,12 +18,8 @@ export const GameStageTwo = (function implementer() {
         ] = parameters;
 
         k.scene(sceneName, () => {
-            // TODO: Continue. Correct sound implementation
             const bgMusic = k.play('bg', { loop: true });
-            bgMusic.stop(); // DELETE
-
             level.parseLoot(layerData, 'stageTwo');
-
             const stage = level.buildLocation(
                 k,
                 'stageTwo',
@@ -61,6 +57,7 @@ export const GameStageTwo = (function implementer() {
             });
 
             k.onCollide('stageShift', 'player', () => {
+                bgMusic.stop();
                 parameters.push({ playerPos: { x: 1952, y: 896 } });
                 k.go('gameStageOne', ...parameters);
             });
