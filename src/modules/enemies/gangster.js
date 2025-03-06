@@ -88,7 +88,6 @@ export const Gangster = (function implementer() {
                                 soundPlayer(...soundEffects.money);
                             });
                         } else {
-                            this.pos.x += 8;
                             const direction = [k.vec2(-1, -1), k.UP, k.vec2(1, -1)];
                             for (let i = 0; i < 3; i++) {
                                 k.add([
