@@ -3,3 +3,4 @@ dist/
 .DS_Store
 src/data/stageZero.json
 public/sprites/stageZero.png
+.vscode
