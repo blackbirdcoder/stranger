@@ -19,7 +19,6 @@ export const Level = (function implementer() {
         playerPosY = undefined
     ) {
         const stage = k.add([k.sprite(levelSpriteName), k.pos(0, 0)]);
-        //console.log(layersLevel);
         for (const layer of layersLevel) {
             if (layer.name === 'Colliders') {
                 for (const object of layer.objects) {
