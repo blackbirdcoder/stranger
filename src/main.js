@@ -50,11 +50,9 @@ import { GameStageTwo } from '/src/modules/scenes/stageTwo.js';
         height: settings.scene.height,
         background: settings.colors.get('swatch20'),
         scale: 1,
-        debugKey: 'd', // DELETE
     });
     k.setGravity(settings.scene.gravity);
     k.loadRoot('./');
-    k.debug.inspect = true; // DELETE
     loader.load(k);
     const generalSceneParameters = [
         settings,
